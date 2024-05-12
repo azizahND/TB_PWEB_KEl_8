@@ -1,0 +1,14 @@
+{
+  "name": "tb_pweb_kel_8",
+  "version": "1.0.0",
+  "description": "second",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rasyid",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
