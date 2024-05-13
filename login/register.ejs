@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Register</title>
 </head>
 <body>
   <div class="container" style="
@@ -14,16 +14,49 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
   ">
-    <h1 style="text-align: center;">Login</h1>
-    <form action="/login" method="post" style="
+    <h1 style="text-align: center;">Register</h1>
+    <form action="/register" method="post" style="
       display: flex;
       flex-direction: column;
     ">
       <div class="form-group" style="
         margin-bottom: 15px;
       ">
+        <label for="nim">NIM</label>
+        <input type="text" id="nim" name="nim" required autofocus style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        ">
+      </div>
+      <div class="form-group" style="
+        margin-bottom: 15px;
+      ">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" required style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        ">
+      </div>
+      <div class="form-group" style="
+        margin-bottom: 15px;
+      ">
+        <label for="noTelepon">Nomor Telepon</label>
+        <input type="text" id="noTelepon" name="noTelepon" required style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        ">
+      </div>
+      <div class="form-group" style="
+        margin-bottom: 15px;
+      ">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required autofocus style="
+        <input type="email" id="email" name="email" required style="
           width: 100%;
           padding: 10px;
           border: 1px solid #ccc;
@@ -41,16 +74,6 @@
           border-radius: 3px;
         ">
       </div>
-      <div class="form-group" style="
- display: flex;
- justify-content: space-between;
- align-items: flex-start;
-">
- <input type="checkbox" id="rememberMe" name="rememberMe" style="margin-right: 10px;">
- <label for="rememberMe">Remember Me</label>
- <span style="margin-left: 10px; margin-right: 150px;"></span>
- <a href="gantipassword.ejs" style="color: blue; text-decoration: none;">Forgot Password?</a>
-</div>
       <button type="submit" style="
         background-color: #000000;
         color: rgb(255, 255, 255);
@@ -60,13 +83,13 @@
         cursor: pointer;
         margin-top: 15px;
       ">
-        Login
+        Register
       </button>
       <div class="links" style="
         text-align: center;
         margin-top: 20px;
       ">
-        <a href="register.ejs">Don't have an account? Sign Up</a>
+        <a href="login.ejs">Already have an account? Login</a>
       </div>
     </form>
   </div>
