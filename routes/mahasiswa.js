@@ -14,9 +14,10 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.get('/ubahPassword', (req, res) => {
-  res.render('gantiPassword');
+router.get('/ubahPassword',  function(req, res, next) {
+  res.render('ganti-password'); 
 });
+
 
 
 module.exports=router;
