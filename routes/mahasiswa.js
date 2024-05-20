@@ -13,6 +13,11 @@ router.get('/mahasiswa', isAuthenticated, isMahasiswa, (req, res) => {
 router.get('/login', (req, res) => {
   res.render('login');
 });
+
+router.get('/ubahPassword', (req, res) => {
+  res.render('gantiPassword');
+});
+
 module.exports=router;
 
 
