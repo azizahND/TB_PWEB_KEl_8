@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align: center;">Login</h1>
+    <div class="login-options">
+      <a href="login.ejs?role=admin" class="login-button">Admin</a>
+      <a href="login.ejs?role=mahasiswa" class="login-button">Mahasiswa</a>
+    </div>
+  </div>
+
+  <style>
+    
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 400px;
+      padding: 40px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-options {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .login-button {
+      display: inline-block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #000000;
+      border: none;
+      border-radius: 3px;
+      margin: 10px 0;
+      font-size: 18px;
+      width: 150px; 
+      text-align: center; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+    }
+  </style>
+</body>
+</html>
