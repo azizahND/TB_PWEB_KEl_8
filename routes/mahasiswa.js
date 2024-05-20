@@ -6,7 +6,13 @@ router.get('/profileMahasiswa',  function(req, res, next) {
 });
 
 
-module.exports = router;
+router.get('/ubahPassword',  function(req, res, next) {
+  res.render('ganti-password'); 
+});
+
+module.exports = router;
+
+
 
 
 
