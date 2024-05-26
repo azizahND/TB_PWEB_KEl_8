@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 require('dotenv').config()
 
+
+
+
 var mhsRouter = require('./routes/mahasiswa');
 var adminRouter = require('./routes/admin');
 
@@ -14,6 +17,7 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -73,10 +77,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
 // Menambahkan console log untuk menampilkan server berjalan di port tertentu
 var port = process.env.PORT || 9000; // Port default 3000 atau sesuai dengan yang diatur di file .env
 
+
 module.exports = app;
 
+app.listen(port, function() {
+  console.log('Server berjalan pada port ' + port);
+});
 
+module.exports=app;

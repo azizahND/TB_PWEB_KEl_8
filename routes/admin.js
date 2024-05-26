@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const app = express();
-
 const { isAuthenticated, isAdmin } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
 
 router.get('/profileAdmin',  function(req, res, next) {
@@ -18,6 +17,10 @@ router.get('/login', (req, res) => {
 
 router.get('/ubahPassword',  function(req, res, next) {
   res.render('ganti-password'); 
+});
+
+router.get('/dashboard',  function(req, res, next) {
+  res.render('dasboard'); 
 });
 
 

@@ -1,0 +1,74 @@
+body {
+    background-color: #F1F3FC;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    background-color: #1A4D2E;
+    width: 180px;
+    padding: 10px;
+    height: 98vh;
+    float: left;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    
+}
+
+.nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    list-style-type: none;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+    padding: 5px 0;
+    margin-left: -10px;
+}
+
+.nav a.active {
+    font-weight: bold;
+}
+
+.nav li img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+
+.card-body {
+   
+    margin-top: 10px;
+    margin-left: 20px;
+
+}
+
+#evaluationChart{
+    width: 40px;
+}
+
+.col {
+    background-color: rgba(26, 77, 46, 0.4);
+    
+    margin-left: 300px;
+    width: 50%;
+    height: 250px;
+    
+}
+
+.judul h1 {
+    margin-left: 250px;
+}

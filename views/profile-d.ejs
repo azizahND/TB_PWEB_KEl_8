@@ -4,159 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Page Title</title>
-    <style>
-        body {
-            background-color: #F1F3FC;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav {
-            background-color: #1A4D2E;
-            width: 180px;
-            padding: 10px;
-            height: 98vh;
-            float: left;
-        }
-
-        .nav ul {
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav li {
-            list-style-type: none;
-            margin-top: 30px;
-            margin-left: 30px;
-        }
-
-        .nav a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            text-align: left;
-            padding: 5px 0;
-            margin-left: -10px;
-        }
-
-        .nav a.active {
-            font-weight: bold;
-        }
-
-        .nav li img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-
-        .btn-custom {
-            background-color: #3e9743;
-            color: #ffffff;
-            border: 2px solid #A6ABC8;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
-            margin-top: 30px;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-custom:hover {
-            background-color: #3e9743;
-            color: white;
-        }
-
-        .container {
-            margin-left:30px;
-            padding: 20px;
-        }
-
-        .nama img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            border: 3px solid #1A4D2E;
-        }
-
-        .nama, .edit {
-            margin-top: 20px;
-            background-color: #ffffff;
-            margin-left: 187px;
-            border-radius: 20px;
-            padding: 20px;
-            float: left;
-        }
-
-        .nama {
-            width: 100vh;
-        }
-
-        .edit {
-            margin-left: 190px;
-        }
-        .edit h1 {
-            padding-top: 15px;
-            margin: 0;
-        }
-
-        .data {
-            margin-top: 10px;
-        }
-
-        .btn-primary {
-            margin-top: 20px;
-            margin-left: 475px;
-            margin-bottom: 5px;
-            background-color: #1A4D2E;
-            padding: 10px 30px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 20px;
-            font-size: 15px;
-        }
-
-        .btn-primary:hover {
-            background-color: #3e9743;
-        }
-
-        .mb-3 {
-            margin: 5px 50px;
-            margin-left: 10px;
-        }
-
-        .nama h2 {
-            font-size: 30px;
-            margin-left: 40px;
-            padding-right: 20px;
-            margin-top: 35px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #1A4D2E;
-            border-radius: 4px;
-        }
-
-        .container-new {
-            margin-top: 50px;
-            width: max-content;
-            text-align: left;
-           
-        }
-
-    </style>
+    <link href="/styles/profile.css" rel="stylesheet" />
+    
 </head>
 <body>
     <div class="nav">
         <ul class="menu">
-            <li><a href="#"><img src="unand.jpeg" alt="Logo"></a></li>
+            <li><a href="#"><img src="/images/unand.jpeg" alt="Logo"></a></li>
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Evaluasi</a></li>
             <li><a href="#">Umpan Balik</a></li>
@@ -170,7 +24,7 @@
         <div class="nama">
             <div class="container text-left" style="margin-left: 10px;">
                 <div style="display: flex; align-items: center;">
-                    <img src="public/image/new.jpg" alt="Profile Picture">
+                    <img src="/images/admin.jpg" alt="Profile Picture">
                     <div id="nama" style="margin-left: 20px;">
                         <h2>Admin Evaluasi Prodi</h2>
                         <div id="jurusan" style="font-size: 20px; margin-left: 40px;">Admin</div>
