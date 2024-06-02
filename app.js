@@ -7,9 +7,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 require('dotenv').config()
 
-
-
-
 var mhsRouter = require('./routes/mahasiswa');
 var adminRouter = require('./routes/admin');
 
@@ -26,17 +23,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const { isAuthenticated, isAdmin, isMahasiswa } = require('./middlewares/auth');
 
-// Dummy user data for demonstration
-app.use((req, res, next) => {
-  // Simulate a logged-in user. In real applications, you would use a session or token
-  req.user = {
-    id: 1,
-    username: 'testuser',
-    role: 'admin' // Change to 'mahasiswa' to test mahasiswa role
-  };
-  next();
-});
-
 // Setup middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
@@ -45,15 +31,68 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// Dummy user data for demonstration
+app.get('/', function (req, res) {
+  res.render('register');
+});
+
+const crypto = require('crypto');
+
+const getHashedPassword = (password) => {
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    return hash;
+}
+
 const users = [
-  { id: 1, username: 'admin', password: 'adminpass', role: 'admin' },
-  { id: 2, username: 'mahasiswa', password: 'mahasiswapass', role: 'mahasiswa' }
+  // This user is added to the array to avoid creating a new user on each restart
+  {
+      nim: '2111523012',
+      namaLengkap: 'Rasyid',
+      telepon: '089630772353',
+      email: 'rasyid@gmail.com',
+      // This is the SHA256 hash for value of `password`
+      password: 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg='
+  }
 ];
 
+app.post('/register', (req, res) => {
+  const { nim, namaLengkap, telepon, email, password } = req.body;
+
+      // Check if user with the same email is also registered
+      if (users.find(user => user.email === email)) {
+
+          res.render('register', {
+              message: 'User already registered.',
+              messageClass: 'alert-danger'
+          });
+
+          return;
+      }
+
+      const hashedPassword = getHashedPassword(password);
+
+      // Store user into the database if you are using one
+      users.push({
+          nim,
+          namaLengkap,
+          telepon,
+          email,
+          password: hashedPassword
+      });
+
+      res.render('login', {
+          message: 'Registration Complete. Please login to continue.',
+          messageClass: 'alert-success'
+      });
+  });
+
+  app.get('/login', function (req, res) {
+    res.render('login');
+  });
+
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
+  const { email, password } = req.body;
+  const user = users.find(u => u.email === email && u.password === password);
   if (user) {
     req.session.user = user;
     res.redirect('/');
@@ -62,6 +101,60 @@ app.post('/login', (req, res) => {
   }
 });
 
+const generateAuthToken = () => {
+  return crypto.randomBytes(30).toString('hex');
+}
+
+// This will hold the users and authToken related to users
+const authTokens = {};
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const hashedPassword = getHashedPassword(password);
+
+    const user = users.find(u => {
+        return u.email === email && hashedPassword === u.password
+    });
+
+    if (user) {
+        const authToken = generateAuthToken();
+
+        // Store authentication token
+        authTokens[authToken] = user;
+
+        // Setting the auth token in cookies
+        res.cookie('AuthToken', authToken);
+
+        // Redirect user to the protected page
+        res.redirect('/dashboard');
+    } else {
+        res.render('login', {
+            message: 'Invalid username or password',
+            messageClass: 'alert-danger'
+        });
+    }
+});
+
+app.use((req, res, next) => {
+  // Get auth token from the cookies
+  const authToken = req.cookies['AuthToken'];
+
+  // Inject the user to the request
+  req.user = authTokens[authToken];
+
+  next();
+});
+
+app.get('/dashboard', (req, res) => {
+  if (req.user) {
+      res.render('dashboard');
+  } else {
+      res.render('login', {
+          message: 'Please login to continue',
+          messageClass: 'alert-danger'
+      });
+  }
+});
 
 app.use('/mahasiswa', mhsRouter);
 app.use('/admin', adminRouter);
@@ -79,7 +172,6 @@ app.use(function(err, req, res, next) {
 
 // Menambahkan console log untuk menampilkan server berjalan di port tertentu
 var port = process.env.PORT || 9000; // Port default 3000 atau sesuai dengan yang diatur di file .env
-
 
 module.exports = app;
 
