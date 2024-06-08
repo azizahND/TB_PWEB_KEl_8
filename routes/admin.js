@@ -1,7 +1,19 @@
 var express = require('express');
 var router = express.Router();
-const app = express();
+const adminController = require('../controller/admin');
 const { isAuthenticated, isAdmin } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
+
+
+
+router.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
+  res.render('dasboard', { user: req.session.user });
+});
+
+router.get('/dash',  function(req, res, next) {
+  res.render('dashboard1'); 
+});
+
+
 
 router.get('/profileAdmin',  function(req, res, next) {
   res.render('profile-d'); 
@@ -16,12 +28,19 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/ubahPassword',  function(req, res, next) {
-  res.render('ganti-password'); 
+  res.render('gantiPassword'); 
 });
 
-router.get('/dashboard',  function(req, res, next) {
-  res.render('dasboard'); 
+router.get('/hasil', (req, res) => {
+  res.render('hasilEvaluasi');
 });
+
+
+
+
+
+
+
 
 
 module.exports=router;

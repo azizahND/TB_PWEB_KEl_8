@@ -137,6 +137,39 @@ body {
     border-radius: 4px;
 }
 
+
+#email {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #1A4D2E;
+    border-radius: 4px;
+}
+
+#nama {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #1A4D2E;
+    border-radius: 4px;
+}
+
+#nip {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #1A4D2E;
+    border-radius: 4px;
+}
+
+#password {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #1A4D2E;
+    border-radius: 4px;
+}
+
 .container-new {
     margin-top: 50px;
     width: max-content;

@@ -1,36 +1,28 @@
-const { book } = require('../models')
+const { isAdmin } = require('../middlewares/auth');
 
-const findAllUser = async (req, res) => {
-    try {
-        const data= await user.findAll()
-        const result ={
-            status:'ok',
-            data:data
-
-
-        }
-    } catch (error) {
-        console.log(error, "error find all user")
-    }
-
-    const getUserById = async (req, res) => {
-        try {
-            const id= req.params
-            const data = await user.findByPk(id)
-    
-            if(data === null)
-                {
-                    return res.status(404).json({
-                    status : 'failed',
-                   message : 'not found'
-                })
-            }
-            res,json({
-                status: 'ok',
-                data: data
-            })
-        } catch (error) {
-            console.log(error, "error find all user")
-        }
+function renderDashboard(req, res) {
+    if (req.session.user.role === 'admin') {
+        res.render('dasboard'); // Pastikan Anda memiliki file `dashboard.ejs`
+    } else {
+        res.status(403).send('Access denied. Admins only.');
     }
 }
+
+
+
+function logout(req, res) {
+    // Destroy the session
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error ketika logout:', err);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+      // Redirect to the login page
+      return res.redirect('/login');
+    });
+  }
+
+module.exports = {
+    renderDashboard,
+    logout
+};

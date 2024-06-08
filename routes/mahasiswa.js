@@ -15,7 +15,18 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.get('/ubahPassword',  function(req, res, next) {
+router.get('/hasil', (req, res) => {
+  res.render('hasilEvaluasi');
+});
+
+
+
+router.get('/dashboard', isAuthenticated, isMahasiswa, (req, res) => {
+  res.render('dashboard-m', { user: req.session.user });
+});
+
+
+router.get('/ubahPassword' ,  function(req, res, next) {
   res.render('ganti-password'); 
 });
 
