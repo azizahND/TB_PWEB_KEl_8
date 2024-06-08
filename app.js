@@ -8,12 +8,15 @@ const session = require('express-session');
 require('dotenv').config()
 
 
-
-
+var authRouter = require('./routes/auth');
 var mhsRouter = require('./routes/mahasiswa');
 var adminRouter = require('./routes/admin');
 
+
 var app = express();
+
+
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -41,30 +44,18 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: 'secret_key',
-  resave: false,
+  resave: false,  
   saveUninitialized: true
 }));
 
-// Dummy user data for demonstration
-const users = [
-  { id: 1, username: 'admin', password: 'adminpass', role: 'admin' },
-  { id: 2, username: 'mahasiswa', password: 'mahasiswapass', role: 'mahasiswa' }
-];
-
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
-  if (user) {
-    req.session.user = user;
-    res.redirect('/');
-  } else {
-    res.status(401).send('Login failed');
-  }
-});
 
 
+
+
+app.use('/', authRouter);
 app.use('/mahasiswa', mhsRouter);
 app.use('/admin', adminRouter);
+
 
 app.use(function(req, res, next) {
   next(createError(404));

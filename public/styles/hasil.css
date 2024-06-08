@@ -1,0 +1,42 @@
+
+
+#pertanyaan {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #1A4D2E;
+    border-radius: 4px;
+    margin-top: 5px;
+    background-color: #D9D9D9;
+}
+
+.evaluasi {
+    margin-left: 100px;
+}
+
+.btn-primary {
+    margin-top: 20px;
+    margin-left: 900px;
+    margin-bottom: 5px;
+    background-color: #1A4D2E;
+    padding: 5px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+.btn-primary:hover {
+    background-color: #3e9743;
+}
+
+
+.hasil h1 {
+    margin-left: 100px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-top: 3px;
+}

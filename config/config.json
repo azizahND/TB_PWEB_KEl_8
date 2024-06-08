@@ -2,14 +2,14 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "evaluasi1",
+    "database": "eval",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "evaluasi_test",
+    "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

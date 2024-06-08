@@ -5,28 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Page Title</title>
     <link href="/styles/profile.css" rel="stylesheet" />
-   
+    
 </head>
 <body>
     <div class="nav">
         <ul class="menu">
-            <li><a href="#"><img src="unand.jpeg" alt="Logo"></a></li>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="#"><img src="/images/unand.jpeg" alt="Logo"></a></li>
+            <li><a href="/mahasiswa/dashboard">Dashboard</a></li>
             <li><a href="#">Evaluasi</a></li>
             <li><a href="#">Umpan Balik</a></li>
             <li><a href="#">Notifikasi</a></li>
-            <li><a href="#">Pengaturan</a></li>
             <li><a href="#" class="active">Profile</a></li>
             <li><a href="#" style="margin-top: 70px;">Log Out</a></li>
         </ul>
     </div>
     <div class="container">
         <div class="nama">
-            <div class="container text-left" style="margin-left: 10px;">
+            <div class="container text-left" style="margin-left: 10px; margin-top: 0;">
                 <div style="display: flex; align-items: center;">
-                    <img src="public/image/new.jpg" alt="Profile Picture">
-                    <div id="nama" style="margin-left: 20px;">
-                        <h2>Mahasiswa</h2>
+                    <img src="/images/admin.jpg" alt="Profile Picture">
+                    <div id="user" style="margin-left: 20px;">
+                        <h2>Azizah Novi Delfianti</h2>
                         <div id="jurusan" style="font-size: 20px; margin-left: 40px;">Sistem Informasi</div>
                     </div>
                 </div>
@@ -40,28 +39,36 @@
                         <div style="flex: 1;">
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="nama" placeholder="">
+                                <div id="nama">Admin</div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="">
+                                <div id="email">admin@gmail.com</div>
                             </div>
                         </div>
                         <div style="flex: 1;">
                             <div class="mb-3">
                                 <label for="nip" class="form-label">NIP</label>
-                                <input type="text" class="form-control" id="nip" placeholder="">
+                                <div id="nip">123456789</div>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="">
+                                <div id="password">********</div>
                             </div>
                         </div>
                     </div>
                     <button class="btn-primary" type="submit">Ganti Password</button>
                 </div>
+                
             </div>
         </div>
     </div>
 </body>
+<script>
+    // Menambahkan event listener pada button
+    document.querySelector('.btn-primary').addEventListener('click', function() {
+        // Mengarahkan ke halaman /admin/ubahPassword
+        window.location.href = '/admin/ubahPassword';
+    });
+</script>
 </html>

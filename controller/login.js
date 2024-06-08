@@ -1,45 +1,44 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models'); // Ganti 'User' dengan nama model yang sesuai dengan struktur data pengguna Anda
-const { isAuthenticated } = require('../middlewares/auth'); // Import middleware yang telah Anda definisikan sebelumnya
+const { User } = require('../models/index');
+const { isAuthenticated } = require('../middlewares/auth');
 
-// Controller untuk proses login
 async function login(req, res) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        // Cari pengguna berdasarkan nama pengguna (username)
-        const user = await User.findOne({ where: { username: username } });
+        const user = await User.findOne({ where: { email: email } });
 
-        // Jika pengguna tidak ditemukan, kirim respons dengan pesan kesalahan
         if (!user) {
-            return res.status(401).send('Username or password is incorrect.');
+            console.log('User not found');
+            return res.status(401).send('Email or password is incorrect.');
         }
 
-        // Bandingkan password yang dimasukkan dengan password yang disimpan di database menggunakan bcrypt
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        // Jika password tidak valid, kirim respons dengan pesan kesalahan
         if (!isPasswordValid) {
-            return res.status(401).send('Username or password is incorrect.');
+            console.log('Invalid password');
+            return res.status(401).send('Email or password is incorrect.');
         }
 
-        // Jika autentikasi berhasil, atur objek pengguna dalam sesi
         req.session.user = {
-            id: user.id,
-            username: user.username,
-            role: user.role // Anggap bahwa role disimpan di dalam kolom 'role' di tabel pengguna
+            id: user.idUser,
+            email: user.email,
+            role: user.role
         };
 
-        // Redirect pengguna ke halaman dashboard
-        res.redirect('/dashboard');
+        console.log('Login successful:', req.session.user);
+
+        // Membuat percabangan untuk mengarahkan berdasarkan role
+        if (user.role === 'mahasiswa') {
+            return res.redirect('/mahasiswa/dashboard');
+        } else {
+            return res.redirect('/admin/dashboard');
+        }
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).send('Internal Server Error');
     }
 }
-
-// Contoh route untuk proses login
-app.post('/login', login);
 
 module.exports = {
     login
