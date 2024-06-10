@@ -44,15 +44,8 @@ const getHashedPassword = (password) => {
 }
 
 const users = [
-  // This user is added to the array to avoid creating a new user on each restart
-  {
-      nim: '2111523012',
-      namaLengkap: 'Rasyid',
-      telepon: '089630772353',
-      email: 'rasyid@gmail.com',
-      // This is the SHA256 hash for value of `password`
-      password: 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg='
-  }
+  { id: 1, nim: '3012', username: 'admin', password: 'adminpass', role: 'admin' },
+  { id: 2, nim: '2111523012', username: 'mahasiswa', password: 'mahasiswapass', role: 'mahasiswa' }
 ];
 
 app.post('/register', (req, res) => {
@@ -149,11 +142,19 @@ app.get('/dashboard', (req, res) => {
   if (req.user) {
       res.render('dashboard');
   } else {
-      res.render('login', {
+      res.render('dashboard', {
           message: 'Please login to continue',
           messageClass: 'alert-danger'
       });
   }
+});
+
+app.get('/form-evaluasi', function (req, res) {
+  res.render('form-evaluasi');
+});
+
+app.get('/profile-m', function (req, res) {
+  res.render('profile-m');
 });
 
 app.use('/mahasiswa', mhsRouter);

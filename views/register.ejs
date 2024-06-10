@@ -1,97 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
 </head>
-<body>
-  <div class="container" style="
-    width: 400px;
-    padding: 40px;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgb(0, 0, 0);
-    margin: 0 auto;
-  ">
-    <h1 style="text-align: center;">Register</h1>
-    <form action="/register" method="post" style="
-      display: flex;
-      flex-direction: column;
-    ">
-      <div class="form-group" style="
-        margin-bottom: 15px;
-      ">
-        <label for="nim">NIM/NIP</label>
-        <input type="text" id="nim" name="nim" required autofocus style="
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        ">
-      </div>
-      <div class="form-group" style="
-        margin-bottom: 15px;
-      ">
-        <label for="nama">Nama Lengkap</label>
-        <input type="text" id="nama" name="nama" required style="
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        ">
-      </div>
-      <div class="form-group" style="
-        margin-bottom: 15px;
-      ">
-        <label for="noTelepon">Nomor Telepon</label>
-        <input type="text" id="noTelepon" name="noTelepon" required style="
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        ">
-      </div>
-      <div class="form-group" style="
-        margin-bottom: 15px;
-      ">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required style="
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        ">
-      </div>
-      <div class="form-group" style="
-        margin-bottom: 15px;
-      ">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required style="
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 3px;
-        ">
-      </div>
-      <button type="submit" style="
-        background-color: #000000;
-        color: rgb(255, 255, 255);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        margin-top: 15px;
-      ">
-        Register
-      </button>
-      <div class="links" style="
-        text-align: center;
-        margin-top: 20px;
-      ">
-        <a href="login.ejs">Already have an account? Login</a>
-      </div>
-    </form>
-  </div>
+<body style="margin:0; padding:0; background: url('/images/rektorat.jpeg') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background: rgba(0, 100, 0, 0.7); padding: 20px; border-radius: 10px; width: 300px;">
+        <h2 style="color: white; text-align: center;">Register</h2>
+        <form action="/register" method="post">
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="nim" name="nim" placeholder="NIM/NIP" required autofocus style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="nama" name="nama" placeholder="Nama Lengkap" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="noTelepon" name="noTelepon" placeholder="Nomor Telepon" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <input type="email" id="email" name="email" placeholder="Email" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding: 10px; border-radius: 5px; border: none;">
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" style="padding: 10px 20px; border: none; border-radius: 5px; background: #ffffff; color: rgb(0, 0, 0); cursor: pointer;">Register</button>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>
