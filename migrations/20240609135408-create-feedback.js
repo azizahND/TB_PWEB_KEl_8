@@ -10,10 +10,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idJawaban: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'jawabanEvaluasis', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       idAdmin: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'admins', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       feedback: {
         type: Sequelize.STRING
@@ -26,11 +38,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },

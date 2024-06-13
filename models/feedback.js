@@ -1,27 +1,46 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class feedback extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class Feedback extends Model {
     static associate(models) {
-      // define association here
+      Feedback.belongsTo(models.jawabanEvaluasi, {
+        foreignKey: 'idJawaban',
+        as: 'jawabanEvaluasi',
+      });
+      Feedback.belongsTo(models.admin, {
+        foreignKey: 'idAdmin',
+        as: 'admin',
+      });
     }
   }
-  feedback.init({
-    idJawaban: DataTypes.INTEGER,
-    idAdmin: DataTypes.INTEGER,
-    feedback: DataTypes.STRING,
-    tanggal: DataTypes.DATE,
-    picture: DataTypes.BLOB
+
+  Feedback.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    idJawaban: {
+      type: DataTypes.INTEGER
+    },
+    idAdmin: {
+      type: DataTypes.INTEGER
+    },
+    feedback: {
+      type: DataTypes.STRING
+    },
+    tanggal: {
+      type: DataTypes.DATE
+    },
+    picture: {
+      type: DataTypes.BLOB
+    },
   }, {
     sequelize,
-    modelName: 'feedback',
+    modelName: 'Feedback',
   });
-  return feedback;
+
+  return Feedback;
 };

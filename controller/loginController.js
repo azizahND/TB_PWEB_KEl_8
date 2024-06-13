@@ -1,13 +1,15 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models/index');
 const { isAuthenticated } = require('../middlewares/auth');
+const { User } = require("../models/index");
+const { where } = require('sequelize');
 
-async function login(req, res) {
+const login = async(req, res) => {
     const { email, password } = req.body;
+    
 
     try {
-        const user = await User.findOne({ where: { email: email } });
-
+        const user = await User.findOne({ where: { email} });
+        console.log(login)
         if (!user) {
             console.log('User not found');
             return res.status(401).send('Email or password is incorrect.');
@@ -21,7 +23,7 @@ async function login(req, res) {
         }
 
         req.session.user = {
-            id: user.idUser,
+            id: user.id,
             email: user.email,
             role: user.role
         };

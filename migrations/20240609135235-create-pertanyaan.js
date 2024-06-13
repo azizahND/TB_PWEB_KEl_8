@@ -10,7 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idAdmin: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'admins', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        }
       },
       pertanyaan: {
         type: Sequelize.STRING

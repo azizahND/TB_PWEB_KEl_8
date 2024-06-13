@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class admin extends Model {
     static associate(models) {
-      admin.belongsTo(models.user, {
+      admin.belongsTo(models.User, {
         foreignKey: 'idUser',
         as: 'user',
       });
@@ -13,11 +13,27 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   admin.init({
-    idUser: DataTypes.INTEGER,
-    nama: DataTypes.STRING,
-    nip: DataTypes.STRING,
-    gender: DataTypes.STRING
-  }, {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    idUser: {
+      type: DataTypes.INTEGER
+    },
+    nama: {
+      type: DataTypes.STRING
+    },
+    nip: {
+      type: DataTypes.STRING
+    },
+    gender: {
+      type: DataTypes.STRING
+    },
+    
+  },
+   {
     sequelize,
     modelName: 'admin',
   });

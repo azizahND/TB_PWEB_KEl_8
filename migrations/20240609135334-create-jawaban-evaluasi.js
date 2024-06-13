@@ -10,10 +10,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idPertanyaan: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'pertanyaans', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        }
       },
       idMahasiswa: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'mahasiswas', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        }
       },
       jawaban: {
         type: Sequelize.STRING
