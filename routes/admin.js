@@ -3,11 +3,11 @@ var router = express.Router();
 const adminController = require('../controller/admin');
 const { isAuthenticated, isAdmin } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
 
+// Rute untuk dashboard admin
 
+// Rute untuk dashboard admin
+router.get('/dashboard', isAuthenticated, isAdmin, adminController.getDashboard);
 
-router.get('/dashboard', isAuthenticated, isAdmin, (req, res) => {
-  res.render('dasboard', { user: req.session.user });
-});
 
 router.get('/dash',  function(req, res, next) {
   res.render('dashboard1'); 
