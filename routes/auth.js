@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const { login } = require('../controller/login');
-
-router.post('/login', login);
+const loginController = require('../controller/loginController');
 
 router.get('/login', (req, res) => {
     res.render('login');
 });
+
+router.post('/login', loginController.login);
+
 
 
 

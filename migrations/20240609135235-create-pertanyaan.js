@@ -2,26 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('pertanyaans', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUser: {
-        type: Sequelize.STRING
+      idAdmin: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'admins', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        }
       },
-      email: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
-      username: {
-        type: Sequelize.STRING
-      },
-      role: {
+      pertanyaan: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -35,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('pertanyaans');
   }
 };
