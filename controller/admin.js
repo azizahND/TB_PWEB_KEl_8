@@ -8,6 +8,7 @@ async function getDashboard(req, res, next) {
     ]
   })
   .then(dataEvaluasi => {
+    console.log('Data Evaluasi:', dataEvaluasi); // Tambahkan logging
     res.render('dasboard', { dataEvaluasi });// Sending JSON response with dataEvaluasi
   })
   .catch(error => {
