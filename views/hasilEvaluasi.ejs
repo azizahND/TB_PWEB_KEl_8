@@ -13,31 +13,20 @@
         <h1><strong>Hasil Evaluasi</strong></h1>
         <div class="evaluasi">
             <div class="container text-left">
-               
+                <% if (evaluasiJawaban.length > 0) { %>
+                    <% evaluasiJawaban.forEach(function(evaluasi) { %>
                         <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Seberapa puas saudara untuk sarana & prasarana di Prodi Sistem Informasi</label>
-                            <div id="pertanyaan" >ccccc</div>
+                            <label for="pertanyaan" class="form-label"><%= evaluasi.pertanyaan.pertanyaan %></label>
+                            <div id="pertanyaan"><%= evaluasi.jawaban %></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Rating proses PBM pada prodi Sistem Informasi </label>
-                            <div id="pertanyaan" >vvvvv</div>
-                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="mb-3">
+                        <p>Tidak ada data evaluasi untuk mahasiswa ini.</p>
                     </div>
-                
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Seberapa puas saudara dalam layanan di Prodi Sistem Informasi
-                            </label>
-                            <div id="pertanyaan" >nnn</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Saran</label>
-                            <div id="pertanyaan">********</div>
-                        </div>
-                    </div>
-                </div>
-                <button href="/dashboard" class="btn-primary" type="submit">Kembali</button>
+                <% } %>
             </div>
-            
+            <a href="/admin/dashboard" class="btn-primary">Kembali</a>
         </div>
     </div>
     

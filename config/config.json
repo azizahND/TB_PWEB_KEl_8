@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "eval1",
+    "database": "eval2",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
