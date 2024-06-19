@@ -9,6 +9,8 @@ module.exports = {
     // Hash passwords
     const hashedPassword1 = await bcrypt.hash('admin123', saltRounds);
     const hashedPassword2 = await bcrypt.hash('2022', saltRounds);
+    const hashedPassword3 = await bcrypt.hash('3018', saltRounds);
+    const hashedPassword4 = await bcrypt.hash('3012', saltRounds);
    
 
     return queryInterface.bulkInsert('users', [
@@ -27,6 +29,24 @@ module.exports = {
         email: '2211522022_azizah@student.unand.ac.id',
         password: hashedPassword2,
         username: 'Azizah Novi Delfianti',
+        role: 'mahasiswa',
+        createdAt : new Date(),
+        updatedAt: new Date()
+      },
+      {
+       
+        email: '2211523018_najwa@student.unand.ac.id',
+        password: hashedPassword3,
+        username: 'Najwa Nur Faizah',
+        role: 'mahasiswa',
+        createdAt : new Date(),
+        updatedAt: new Date()
+      },
+      {
+       
+        email: '2111523012_rasyid@student.unand.ac.id',
+        password: hashedPassword4,
+        username: 'Rasyid Nugrahesa',
         role: 'mahasiswa',
         createdAt : new Date(),
         updatedAt: new Date()

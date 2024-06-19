@@ -4,9 +4,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class DetailJawabanEvaluasi extends Model {
     static associate(models) {
-      // Define associations here, if any
-      DetailJawabanEvaluasi.belongsTo(models.pertanyaan, { foreignKey: 'idPertanyaan' });
-      DetailJawabanEvaluasi.belongsTo(models.jawabanEvaluasi, { foreignKey: 'idJawabanEvaluasi' });
+      DetailJawabanEvaluasi.belongsTo(models.pertanyaan, { foreignKey: 'idPertanyaan', as: 'pertanyaan' });
+      DetailJawabanEvaluasi.belongsTo(models.jawabanEvaluasi, { foreignKey: 'idJawabanEvaluasi', as: 'jawabanEvaluasi' });
     }
   }
   DetailJawabanEvaluasi.init({
@@ -30,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'DetailJawabanEvaluasi',
-    
   });
 
   return DetailJawabanEvaluasi;
