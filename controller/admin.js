@@ -1,4 +1,4 @@
-const { jawabanEvaluasi, mahasiswa, DetailJawabanEvaluasi, pertanyaan } = require('../models');
+const { jawabanEvaluasi, mahasiswa, DetailJawabanEvaluasi, pertanyaan, User, admin} = require('../models');
 
 async function getDashboard(req, res, next) {
   try {
@@ -50,25 +50,35 @@ function logout(req, res) {
   });
 }
 
-async function generatedExcel(req, res) {
+async function generateExcel(req, res) {
   try {
-      // Mengambil data evaluasi dari database dengan relasi ke tabel mahasiswa dan pertanyaan
-      const evaluasiJawaban = await jawabanEvaluasi.findAll({
+      // Mengambil data evaluasi dari database dengan relasi ke tabel mahasiswa, jawabanEvaluasi, dan pertanyaan
+      const evaluasiDetailJawaban = await DetailJawabanEvaluasi.findAll({
           include: [
-              { model: mahasiswa, attributes: ['nama', 'nim'] },
-              { model: pertanyaan, attributes: ['pertanyaan'] }
+              {
+                  model: jawabanEvaluasi,
+                  include: {
+                      model: mahasiswa,
+                      attributes: ['nama', 'nim']
+                  }
+              },
+              {
+                  model: pertanyaan,
+                  attributes: ['pertanyaan']
+              }
           ]
       });
 
       // Membuat workbook dan worksheet
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Evaluasi Jawaban');
+      const worksheet = workbook.addWorksheet('Detail Evaluasi Jawaban');
 
       // Menambahkan header ke worksheet
       worksheet.columns = [
           { header: 'ID', key: 'id', width: 10 },
           { header: 'ID Pertanyaan', key: 'idPertanyaan', width: 15 },
           { header: 'Pertanyaan', key: 'pertanyaan', width: 50 },
+          { header: 'ID Jawaban Evaluasi', key: 'idJawabanEvaluasi', width: 20 },
           { header: 'ID Mahasiswa', key: 'idMahasiswa', width: 15 },
           { header: 'Nama Mahasiswa', key: 'namaMahasiswa', width: 30 },
           { header: 'NIM', key: 'nimMahasiswa', width: 15 },
@@ -77,16 +87,17 @@ async function generatedExcel(req, res) {
       ];
 
       // Menambahkan data ke worksheet
-      evaluasiJawaban.forEach(evaluasi => {
+      evaluasiDetailJawaban.forEach(detail => {
           worksheet.addRow({
-              id: evaluasi.id,
-              idPertanyaan: evaluasi.idPertanyaan,
-              pertanyaan: evaluasi.pertanyaan.pertanyaan,
-              idMahasiswa: evaluasi.idMahasiswa,
-              namaMahasiswa: evaluasi.mahasiswa.nama,
-              nimMahasiswa: evaluasi.mahasiswa.nim,
-              jawaban: evaluasi.jawaban,
-              tanggal: new Date(evaluasi.tanggal)
+              id: detail.id,
+              idPertanyaan: detail.idPertanyaan,
+              pertanyaan: detail.pertanyaan.pertanyaan,
+              idJawabanEvaluasi: detail.idJawabanEvaluasi,
+              idMahasiswa: detail.jawabanEvaluasi.idMahasiswa,
+              namaMahasiswa: detail.jawabanEvaluasi.mahasiswa.nama,
+              nimMahasiswa: detail.jawabanEvaluasi.mahasiswa.nim,
+              jawaban: detail.jawaban,
+              tanggal: new Date(detail.createdAt)
           });
       });
 
@@ -96,7 +107,7 @@ async function generatedExcel(req, res) {
       // Mengirimkan buffer sebagai file Excel
       res.set({
           'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'Content-Disposition': 'attachment; filename=evaluasi-jawaban.xlsx'
+          'Content-Disposition': 'attachment; filename=detail-evaluasi-jawaban.xlsx'
       });
 
       res.send(buffer);
@@ -105,6 +116,7 @@ async function generatedExcel(req, res) {
       res.status(500).json({ error: 'Failed to generate Excel file' });
   }
 }
+
 
 
 
@@ -204,12 +216,48 @@ async function deleteJawabanEvaluasi(req, res) {
   }
   }
 
+  async function showAdminProfile(req, res) {
+    const emailAdmin = req.session.user.email; // Get the email of the logged-in admin
+
+    try {
+        // Find the user based on the email
+        const userData = await User.findOne({
+            where: { email: emailAdmin },
+            attributes: ['id', 'email', 'username']
+        });
+
+        if (!userData) {
+            return res.status(404).json({ error: 'User tidak ditemukan' });
+        }
+
+        // Find admin based on the user's id
+        const adminData = await admin.findOne({
+            where: { idUser: userData.id },
+            include: {
+                model: User,
+                as: 'user',
+                attributes: ['email', 'username']
+            }
+        });
+
+        if (!adminData) {
+            return res.status(404).json({ error: 'Admin tidak ditemukan' });
+        }
+
+        res.render('profile-d', { adminData });
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).json({ error: 'Failed to fetch profile' });
+    }
+}
+
 module.exports = {
   getDashboard,
   renderDashboard,
   logout,
-  generatedExcel,
+  generateExcel,
   getEvaluasiData,
   getEvaluasiResults,
-  deleteJawabanEvaluasi
+  deleteJawabanEvaluasi,
+  showAdminProfile
 };

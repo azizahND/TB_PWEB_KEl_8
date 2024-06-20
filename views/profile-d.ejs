@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Your Page Title</title>
+    <title>Profil Admin</title>
     <link href="/styles/profile.css" rel="stylesheet" />
-    
 </head>
 <body>
     <div class="nav">
@@ -25,7 +24,7 @@
                 <div style="display: flex; align-items: center;">
                     <img src="/images/admin.jpg" alt="Profile Picture">
                     <div id="user" style="margin-left: 20px;">
-                        <h2>Admin Evaluasi Prodi</h2>
+                        <h2><%= adminData.user.username %></h2>
                         <div id="jurusan" style="font-size: 20px; margin-left: 40px;">Admin</div>
                     </div>
                 </div>
@@ -39,36 +38,28 @@
                         <div style="flex: 1;">
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <div id="nama">Admin</div>
+                                <div id="nama"><%= adminData.nama %></div>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <div id="email">admin@gmail.com</div>
+                                <div id="email"><%= adminData.user.email %></div>
                             </div>
                         </div>
                         <div style="flex: 1;">
                             <div class="mb-3">
                                 <label for="nip" class="form-label">NIP</label>
-                                <div id="nip">123456789</div>
+                                <div id="nip"><%= adminData.nip %></div>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <div id="password">********</div>
+                                <label for="gender" class="form-label">Gender</label>
+                                <div id="gender"><%= adminData.gender %></div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn-primary" type="submit">Ganti Password</button>
+                    <a href="/admin/ubahPassword" class="btn-primary margin-top-10">Ganti Password</a>
                 </div>
-                
             </div>
         </div>
     </div>
 </body>
-<script>
-    // Menambahkan event listener pada button
-    document.querySelector('.btn-primary').addEventListener('click', function() {
-        // Mengarahkan ke halaman /admin/ubahPassword
-        window.location.href = '/admin/ubahPassword';
-    });
-</script>
 </html>

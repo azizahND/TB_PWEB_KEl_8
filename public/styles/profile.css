@@ -119,7 +119,10 @@ body {
 
 .mb-3 {
     margin: 5px 50px;
-    margin-left: 10px;
+    margin-left: 5px;
+}
+.margin-top-10 {
+    margin-top: 10px;
 }
 
 .nama h2 {
@@ -162,7 +165,7 @@ body {
     border-radius: 4px;
 }
 
-#password {
+#gender {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
