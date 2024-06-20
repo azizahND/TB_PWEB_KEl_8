@@ -208,7 +208,7 @@ async function deleteJawabanEvaluasi(req, res) {
     await jawabanEvaluasi.destroy({
         where: { id: id }
     });
-  
+   
     res.status(200).json({ message: 'Jawaban evaluasi berhasil dihapus' });
   } catch (error) {
   console.error('Error deleting evaluation result:', error);
