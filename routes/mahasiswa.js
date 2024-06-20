@@ -5,6 +5,7 @@ const { isAuthenticated, isMahasiswa } = require('../middlewares/auth'); // Sesu
 const mahasiswaController = require('../controller/mahasiswa');
 
 router.get('/dashboard', isAuthenticated, isMahasiswa, mahasiswaController.getMahasiswaEvaluasi);
+router.get('/profil', isAuthenticated, isMahasiswa, mahasiswaController.showProfile);
 
 
 

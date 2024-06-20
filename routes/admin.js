@@ -13,6 +13,9 @@ router.get('/dashboard/data', isAuthenticated, isAdmin, adminController.getEvalu
 
 router.get('/hasilEvaluasi/:id', isAuthenticated, isAdmin, adminController.getEvaluasiResults);
 
+router.get('/profil', isAuthenticated, isAdmin, adminController.showAdminProfile);
+
+
 router.delete('/dashboard/:id', isAuthenticated, isAdmin, adminController.deleteJawabanEvaluasi);
 
 
