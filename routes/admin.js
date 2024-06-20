@@ -11,7 +11,9 @@ router.get('/dashboard', isAuthenticated, isAdmin, adminController.getDashboard)
 
 router.get('/dashboard/data', isAuthenticated, isAdmin, adminController.getEvaluasiData);
 
-router.get('/hasilEvaluasi', isAuthenticated, isAdmin, adminController.getEvaluasiResults);
+router.get('/hasilEvaluasi/:id', isAuthenticated, isAdmin, adminController.getEvaluasiResults);
+
+router.delete('/dashboard/:id', isAuthenticated, isAdmin, adminController.deleteJawabanEvaluasi);
 
 
 router.get('/dash',  function(req, res, next) {

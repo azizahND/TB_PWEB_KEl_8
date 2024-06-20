@@ -37,15 +37,15 @@
       <tbody>
         <% dataEvaluasi.forEach((item, index) => { %>
         <tr data-id="<%= item.id %>">
-          <td><%= index + 1 %></td>
-          <td><%= item.createdAt.toLocaleDateString() %></td>
-          <td><%= item.mahasiswa.nama %></td>
-          <td><%= item.mahasiswa.nim %></td>
-          <td><button onclick="readRow(this)">Lihat</button></td>
-          <td><button onclick="deleteRow(this)">Hapus</button></td>
+            <td><%= index + 1 %></td>
+            <td><%= item.createdAt.toLocaleDateString() %></td>
+            <td><%= item.mahasiswa.nama %></td>
+            <td><%= item.mahasiswa.nim %></td>
+            <td><a href="/admin/hasilEvaluasi/<%= item.id %>">Lihat</a></td>
+            <td><button onclick="deleteRow(this)">Hapus</button></td>
         </tr>
         <% }) %>
-      </tbody>
+    </tbody>
     </table>
     <button class="btn" onclick="showGrafik()">Grafik Evaluasi</button>
     <div class="hasil" style="display: none;">
@@ -55,25 +55,32 @@
   </div>
 
   <script>
-    async function deleteRow(btn) {
-      const row = btn.parentNode.parentNode;
-      const id = row.getAttribute('data-id');
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        const id = row.getAttribute('data-id');
 
-      try {
-        const response = await fetch(`/admin/dashboard/${id}`, {
-          method: 'DELETE'
-        });
-
-        if (response.ok) {
-          row.parentNode.removeChild(row);
-          alert('Data berhasil dihapus');
-        } else {
-          alert('Gagal menghapus data');
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+            fetch(`/admin/dashboard/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    row.remove();
+                    alert('Data berhasil dihapus');
+                } else {
+                    return response.json().then(error => {
+                        alert('Gagal menghapus data: ' + error.message);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus data');
+            });
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat menghapus data');
-      }
     }
 
     function readRow(btn) {

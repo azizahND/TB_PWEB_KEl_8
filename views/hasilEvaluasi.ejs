@@ -12,19 +12,26 @@
         <div class="evaluasi">
             <div class="container text-left">
                 <% if (evaluasiJawaban && evaluasiJawaban.length > 0) { %>
+                    <h2 style="font-size: 20px; margin-bottom: 50px;">Mahasiswa: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nama %> (NIM: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nim %>)</h2>
                     <% evaluasiJawaban.forEach(function(evaluasi) { %>
-                        <div class="mb-3">
+                        <div class="mb-3" style="margin-top: 20px;">
                             <label for="pertanyaan" class="form-label"><%= evaluasi.pertanyaan.pertanyaan %></label>
                             <div id="pertanyaan"><%= evaluasi.jawaban %></div>
+
                         </div>
+                        
                     <% }); %>
-                <% } else { %>
+                <% } 
+                
+                else { %>
                     <div class="mb-3">
                         <p>Tidak ada data evaluasi untuk mahasiswa ini.</p>
                     </div>
                 <% } %>
+
+                
             </div>
-            <a href="/admin/dashboard" class="btn-primary">Kembali</a>
+            <a href="/admin/dashboard" class="btn-primary" style="margin-top: 30px;">Kembali</a>
         </div>
     </div>
 </body>

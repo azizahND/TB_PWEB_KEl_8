@@ -106,40 +106,41 @@ async function generatedExcel(req, res) {
   }
 }
 
-async function getEvaluationData(req, res) {
-  try {
-      const data = await DetailJawabanEvaluasi.findAll({
-          attributes: ['idPertanyaan', 'jawaban']
-      });
 
-      const formattedData = {};
-      data.forEach(item => {
-          const { idPertanyaan, jawaban } = item;
-          if (!formattedData[idPertanyaan]) {
-              formattedData[idPertanyaan] = {};
-          }
-          if (!formattedData[idPertanyaan][jawaban]) {
-              formattedData[idPertanyaan][jawaban] = 0;
-          }
-          formattedData[idPertanyaan][jawaban]++;
-      });
-
-      res.json(formattedData);
-  } catch (error) {
-      console.error('Error fetching evaluation data:', error);
-      res.status(500).json({ error: 'Failed to fetch evaluation data' });
-  }
-}
 
 async function getEvaluasiResults(req, res) {
+  const idJawabanEvaluasi = req.params.id; // Dapatkan ID jawaban evaluasi dari parameter URL
+
   try {
-      const evaluasiJawaban = await jawabanEvaluasi.findAll({
+      // Dapatkan data detail jawaban evaluasi berdasarkan idJawabanEvaluasi
+      const evaluasiJawaban = await DetailJawabanEvaluasi.findAll({
+          where: { idJawabanEvaluasi: idJawabanEvaluasi },
           include: [
-              { model: mahasiswa, as: 'mahasiswa', attributes: ['nama', 'nim'] },
-              { model: pertanyaan, as: 'pertanyaan', attributes: ['pertanyaan'] }
+              {
+                  model: jawabanEvaluasi,
+                  as: 'jawabanEvaluasi',
+                  attributes: ['id'],
+                  include: [
+                      {
+                          model: mahasiswa,
+                          as: 'mahasiswa',
+                          attributes: ['nama', 'nim']
+                      }
+                  ]
+              },
+              {
+                  model: pertanyaan,
+                  as: 'pertanyaan',
+                  attributes: ['pertanyaan']
+              }
           ]
       });
 
+      if (!evaluasiJawaban || evaluasiJawaban.length === 0) {
+          return res.status(404).json({ error: 'Data evaluasi tidak ditemukan' });
+      }
+
+      // Render halaman EJS dengan data yang diambil
       res.render('hasilEvaluasi', { evaluasiJawaban });
   } catch (error) {
       console.error('Error fetching evaluation results:', error);
@@ -147,11 +148,13 @@ async function getEvaluasiResults(req, res) {
   }
 }
 
+
+
 async function getEvaluasiData(req, res) {
   try {
     const evaluasiJawaban = await DetailJawabanEvaluasi.findAll({
       include: [
-        { model: Pertanyaan, as: 'pertanyaan', attributes: ['pertanyaan'] }
+        { model: pertanyaan, as: 'pertanyaan', attributes: ['pertanyaan'] }
       ]
     });
 
@@ -178,12 +181,35 @@ async function getEvaluasiData(req, res) {
   }
 }
 
+
+async function deleteJawabanEvaluasi(req, res) {
+  const id = req.params.id; // Dapatkan ID dari parameter URL
+  
+  try {
+  // Hapus detail jawaban evaluasi yang terkait
+  await DetailJawabanEvaluasi.destroy({
+  where: { idJawabanEvaluasi: id }
+  });
+  
+
+    // Hapus jawaban evaluasi
+    await jawabanEvaluasi.destroy({
+        where: { id: id }
+    });
+  
+    res.status(200).json({ message: 'Jawaban evaluasi berhasil dihapus' });
+  } catch (error) {
+  console.error('Error deleting evaluation result:', error);
+  res.status(500).json({ error: 'Failed to delete evaluation result' });
+  }
+  }
+
 module.exports = {
   getDashboard,
   renderDashboard,
   logout,
   generatedExcel,
-  getEvaluationData,
   getEvaluasiData,
-  getEvaluasiResults
+  getEvaluasiResults,
+  deleteJawabanEvaluasi
 };
