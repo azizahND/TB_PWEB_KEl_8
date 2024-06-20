@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'idAdmin',
         as: 'admin',
       });
-      pertanyaan.hasMany(models.jawabanEvaluasi, {
+      pertanyaan.hasMany(models.DetailJawabanEvaluasi, { // Perbaiki penulisan nama model di sini
         foreignKey: 'idPertanyaan',
-        as: 'jawabanEvaluasi',
+        as: 'detailJawabanEvaluasi',
       });
     }
+  
   }
   pertanyaan.init({
     id: {

@@ -6,6 +6,12 @@ var logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 require('dotenv').config()
+const http = require('http');
+const socketIo = require('socket.io');
+
+const server = http.createServer(app);
+const io = socketIo(server);
+
 
 
 var authRouter = require('./routes/auth');
@@ -29,15 +35,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const { isAuthenticated, isAdmin, isMahasiswa } = require('./middlewares/auth');
 
-// Dummy user data for demonstration
-app.use((req, res, next) => {
-  // Simulate a logged-in user. In real applications, you would use a session or token
-  req.user = {
-    id: 1,
-    username: 'testuser',
-    role: 'admin' // Change to 'mahasiswa' to test mahasiswa role
-  };
-  next();
+// Menangani koneksi Socket.io
+
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  
+  // Bergabung ke ruangan berdasarkan ID mahasiswa
+  socket.on('joinRoom', (emailMahasiswa) => {
+    console.log(`Mahasiswa dengan email ${emailMahasiswa} bergabung ke ruangan`);
+    socket.join(emailMahasiswa);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 // Setup middleware
@@ -67,6 +79,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 // Menambahkan console log untuk menampilkan server berjalan di port tertentu
 var port = process.env.PORT || 9000; // Port default 3000 atau sesuai dengan yang diatur di file .env

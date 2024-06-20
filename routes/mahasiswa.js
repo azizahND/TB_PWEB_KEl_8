@@ -2,6 +2,11 @@ var express = require('express');
 const app = express();
 var router = express.Router();
 const { isAuthenticated, isMahasiswa } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
+const mahasiswaController = require('../controller/mahasiswa');
+
+router.get('/dashboard', isAuthenticated, isMahasiswa, mahasiswaController.getMahasiswaEvaluasi);
+
+
 
 router.get('/profileMahasiswa',  function(req, res, next) {
   res.render('profile-m'); 

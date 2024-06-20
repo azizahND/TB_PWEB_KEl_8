@@ -1,88 +1,148 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
-    <link href="/styles/dashboard.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <link href="/styles/dashboard.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="nav">
-        <ul class="menu">
-            <li><a href="#"><img src="/images/unand.jpeg" alt="Logo"></a></li>
-            <li><a href="#" class="active">Dashboard</a></li>
-            <li><a href="#">Evaluasi</a></li>
-            <li><a href="#">Umpan Balik</a></li>
-            <li><a href="#">Notifikasi</a></li>
-            <li><a href="/admin/profileAdmin">Profile</a></li>
-            <li><a href="/login" style="margin-top: 70px;">Log Out</a></li>
-        </ul>
-    </div>
-   
+  <div class="nav">
+    <ul class="menu">
+      <li><a href="#"><img src="/images/unand.jpeg" alt="Logo"></a></li>
+      <li><a href="#" class="active">Dashboard</a></li>
+      <li><a href="#">Evaluasi</a></li>
+      <li><a href="#">Umpan Balik</a></li>
+      <li><a href="#">Notifikasi</a></li>
+      <li><a href="/admin/profileAdmin">Profile</a></li>
+      <li><a href="/login" style="margin-top: 70px;">Log Out</a></li>
+    </ul>
+  </div>
 
-    <div class="container">
-      <h1>Data Evaluasi</h1>
-      <button class="btn" style="margin-left: 803px; margin-bottom: 20px; padding: 8px;" onclick="">Generate File</button>
-      <table id="kriteriaTable">
-          <thead>
-              <tr>
-                  <th>No</th>
-                  <th>Tanggal</th>
-                  <th>Nama Mahasiswa</th>
-                  <th>NIM</th>
-                  <th>Evaluasi</th>
-                  <th>Aksi</th>
-              </tr>
-          </thead>
-          <tbody>
-              <% dataEvaluasi.forEach((item, index) => { %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= item.tanggal %></td>
-                  <td><%= item.mahasiswa.nama %></td>
-                  <td><%= item.mahasiswa.nim %></td>
-                  <td> <button onclick="readRow(this)">Lihat</button></td>
-                  <td>
-                    <button onclick="deleteRow(this)">Hapus</button>
-                   
-                  </td>
-                </tr>
-              <% }) %>
-          </tbody> 
-      </table>
-      <button class="btn" onclick="addRow()">Tambah Baris</button>
+  <div class="container">
+    <h1>Data Evaluasi</h1>
+    <button class="btn" style="margin-left: 803px; margin-bottom: 20px; padding: 8px;" onclick="generateExcel()">Generate File</button>
+    <table id="kriteriaTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Nama Mahasiswa</th>
+          <th>NIM</th>
+          <th>Evaluasi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% dataEvaluasi.forEach((item, index) => { %>
+        <tr data-id="<%= item.id %>">
+            <td><%= index + 1 %></td>
+            <td><%= item.createdAt.toLocaleDateString() %></td>
+            <td><%= item.mahasiswa.nama %></td>
+            <td><%= item.mahasiswa.nim %></td>
+            <td><a href="/admin/hasilEvaluasi/<%= item.id %>">Lihat</a></td>
+            <td><button onclick="deleteRow(this)">Hapus</button></td>
+        </tr>
+        <% }) %>
+    </tbody>
+    </table>
+    <button class="btn" onclick="showGrafik()">Grafik Evaluasi</button>
+    <div class="hasil" style="display: none;">
+      <h2>Grafik Evaluasi</h2>
+      <canvas id="evaluationChart"></canvas>
+    </div>
   </div>
 
   <script>
-      function addRow() {
-          const table = document.getElementById('kriteriaTable').getElementsByTagName('tbody')[0];
-          const rowCount = table.rows.length;
-          const row = table.insertRow(rowCount);
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        const id = row.getAttribute('data-id');
 
-          const cell1 = row.insertCell(0);
-          const cell2 = row.insertCell(1);
-          const cell3 = row.insertCell(2);
-          const cell4 = row.insertCell(3);
-          const cell5 = row.insertCell(4);
-          const cell6 = row.insertCell(5);
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+            fetch(`/admin/dashboard/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    row.remove();
+                    alert('Data berhasil dihapus');
+                } else {
+                    return response.json().then(error => {
+                        alert('Gagal menghapus data: ' + error.message);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus data');
+            });
+        }
+    }
 
-          cell1.innerHTML = rowCount + 1;
-          cell2.innerHTML = 'New Date';
-          cell3.innerHTML = 'New Name';
-          cell4.innerHTML = 'New NIM';
-          cell5.innerHTML = 'New Evaluation';
-          cell6.innerHTML = '<button onclick="deleteRow(this)">Hapus</button> <button onclick="readRow(this)">Lihat</button>';
-      }
+    function readRow(btn) {
+      const row = btn.parentNode.parentNode;
+      alert('Reading row: ' + row.rowIndex);
+      // Redirect to hasilEvaluasi page
+      window.location.href = '/admin/hasilEvaluasi';
+    }
 
-      function deleteRow(btn) {
-          const row = btn.parentNode.parentNode;
-          row.parentNode.removeChild(row);
-      }
+    function generateExcel() {
+      // Menggunakan fetch untuk memanggil endpoint /generate-excel
+      fetch('/admin/dashboard/excel')
+        .then(response => response.blob())
+        .then(blob => {
+          // Membuat URL objek blob untuk file Excel
+          const url = window.URL.createObjectURL(new Blob([blob]));
 
-      function readRow(btn) {
-          const row = btn.parentNode.parentNode;
-          alert('Reading row: ' + row.rowIndex);
-      }
+          // Membuat anchor untuk men-download file Excel
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'evaluasi-jawaban.xlsx'; // Nama file yang di-download
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error generating Excel:', error));
+    }
+
+    function showGrafik() {
+      fetch('/admin/dashboard/data')
+        .then(response => response.json())
+        .then(data => {
+          const labels = Object.keys(data);
+          const datasets = Object.keys(data[labels[0]]).map(answer => ({
+            label: answer,
+            data: labels.map(label => data[label][answer] || 0),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }));
+
+          const ctx = document.getElementById('evaluationChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: datasets
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+
+          document.querySelector('.hasil').style.display = 'block';
+        })
+        .catch(error => console.error('Error fetching evaluation data:', error));
+    }
   </script>
 </body>
 </html>

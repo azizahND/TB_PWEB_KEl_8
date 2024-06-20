@@ -5,44 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hasil Evaluasi</title>
     <link href="/styles/hasil.css" rel="stylesheet" />
-    
 </head>
 <body>
-    
     <div class="hasil">
         <h1><strong>Hasil Evaluasi</strong></h1>
         <div class="evaluasi">
             <div class="container text-left">
-               
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Seberapa puas saudara untuk sarana & prasarana di Prodi Sistem Informasi</label>
-                            <div id="pertanyaan" >ccccc</div>
+                <% if (evaluasiJawaban && evaluasiJawaban.length > 0) { %>
+                    <h2 style="font-size: 20px; margin-bottom: 50px;">Mahasiswa: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nama %> (NIM: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nim %>)</h2>
+                    <% evaluasiJawaban.forEach(function(evaluasi) { %>
+                        <div class="mb-3" style="margin-top: 20px;">
+                            <label for="pertanyaan" class="form-label"><%= evaluasi.pertanyaan.pertanyaan %></label>
+                            <div id="pertanyaan"><%= evaluasi.jawaban %></div>
+
                         </div>
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Rating proses PBM pada prodi Sistem Informasi </label>
-                            <div id="pertanyaan" >vvvvv</div>
-                        </div>
-                    </div>
+                        
+                    <% }); %>
+                <% } 
                 
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Seberapa puas saudara dalam layanan di Prodi Sistem Informasi
-                            </label>
-                            <div id="pertanyaan" >nnn</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pertanyaan" class="form-label">Saran</label>
-                            <div id="pertanyaan">********</div>
-                        </div>
+                else { %>
+                    <div class="mb-3">
+                        <p>Tidak ada data evaluasi untuk mahasiswa ini.</p>
                     </div>
-                </div>
-                <button href="/dashboard" class="btn-primary" type="submit">Kembali</button>
+                <% } %>
+
+                
             </div>
-            
+            <a href="/admin/dashboard" class="btn-primary" style="margin-top: 30px;">Kembali</a>
         </div>
     </div>
-    
 </body>
-
-
-
 </html>
