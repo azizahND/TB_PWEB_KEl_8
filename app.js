@@ -149,12 +149,28 @@ app.get('/dashboard', (req, res) => {
   }
 });
 
-app.get('/form-evaluasi', function (req, res) {
-  res.render('form-evaluasi');
-});
-
 app.get('/profile-m', function (req, res) {
   res.render('profile-m');
+});
+
+app.get('/profile-d', function (req, res) {
+  res.render('profile-d');
+});
+
+app.get('/evaluasi-mahasiswa', function (req, res) {
+  res.render('evaluasi-mahasiswa');
+});
+
+app.get('/evaluasi-admin', function (req, res) {
+  res.render('evaluasi-admin');
+});
+
+app.get('/feedback-mahasiswa', function (req, res) {
+  res.render('feedback-mahasiswa');
+});
+
+app.get('/feedback-admin', function (req, res) {
+  res.render('feedback-admin');
 });
 
 app.use('/mahasiswa', mhsRouter);

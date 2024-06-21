@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Admin</title>
+</head>
+<body>
+    <div style="display: flex; height: 100vh;">
+        <!-- Sidebar -->
+        <div style="width: 200px; background-color: #234234; color: white; display: flex; flex-direction: column; align-items: center;">
+            <div style="margin-top: 20px;">
+                <img src="/images/rektorat.jpeg" alt="Profile Image" style="border-radius: 50%; width: 100px; height: 100px;">
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <h3><a href="/dashboard" style="color: white; text-decoration: none;">Dashboard</a></h3>
+                <h3><a href="/evaluasi" style="color: white; text-decoration: none;">Evaluasi</a></h3>
+                <h3><a href="/feedback" style="color: white; text-decoration: none;">Feedback</a></h3>
+                <h3><a href="/notifikasi" style="color: white; text-decoration: none;">Notifikasi</a></h3>
+                <h3><a href="/profile" style="color: white; text-decoration: none;">Profile</a></h3>
+                <h3><a href="/logout" style="color: white; text-decoration: none;">Logout</a></h3>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div style="flex-grow: 1; background-color: white; padding: 20px;">
+            <div style="display: flex; justify-content: space-between;">
+                <h1>FEEDBACK</h1>
+                <h2>Evaluasi Prodi</h2>
+            </div>
+            <div style="margin-top: 20px;">
+                <!-- Feedback Item 1 -->
+                <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px;">
+                    <h3>Pertanyaan 1</h3>
+                    <p>Respon:</p>
+                    <form action="/feedback/detail" method="GET" style="margin-top: 10px;">
+                        <input type="hidden" name="id" value="1">
+                        <button type="submit">Detail</button>
+                    </form>
+                </div>
+                
+                <!-- Feedback Item 2 -->
+                <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px;">
+                    <h3>Pertanyaan 2</h3>
+                    <p>Respon:</p>
+                    <form action="/feedback/detail" method="GET" style="margin-top: 10px;">
+                        <input type="hidden" name="id" value="2">
+                        <button type="submit">Detail</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

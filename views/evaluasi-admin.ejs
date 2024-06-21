@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Evaluasi Admin</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    aside {
+      width: 200px;
+      background-color: #234234;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    aside img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      width: 100%;
+    }
+    nav li {
+      margin-bottom: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+    }
+    main {
+      flex-grow: 1;
+      padding: 20px;
+      background-color: #F5F5F5;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    .evaluation {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .evaluation input {
+      width: 80%;
+      padding: 10px;
+      margin-right: 10px;
+    }
+    .evaluation button {
+      padding: 10px;
+      align-items: right;
+      margin-left: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside>
+      <div>
+        <img src="/images/rektorat.jpeg" alt="Profile Picture">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/">Dashboard</a></li>
+          <li><a href="/">Evaluasi</a></li>
+          <li><a href="/feedback">Feedback</a></li>
+          <li><a href="/notifikasi">Notifikasi</a></li>
+          <li><a href="/profile">Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <header>
+        <h1>FORM EVALUASI</h1>
+        <span>Evaluasi Prodi</span>
+      </header>
+      <div id="evaluationContainer">
+        <form id="addForm">
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    let evaluations = [
+      { id: 1, property_name: "Evaluation 1" },
+      { id: 2, property_name: "Evaluation 2" }
+    ];
+
+    const evaluationContainer = document.getElementById('evaluationContainer');
+
+    function renderEvaluations() {
+      evaluations.forEach(evaluation => {
+        const evaluationDiv = document.createElement('div');
+        evaluationDiv.className = 'evaluation';
+        evaluationDiv.innerHTML = `
+          <form onsubmit="editEvaluation(event, ${evaluation.id})" style="flex-grow: 1; display: flex; align-items: center;">
+            <input type="text" value="${evaluation.property_name}">
+            <button type="submit">Sun</button>
+          </form>
+          <form onsubmit="deleteEvaluation(event, ${evaluation.id})">
+            <button type="submit">Del</button>
+          </form>
+        `;
+        evaluationContainer.appendChild(evaluationDiv);
+      });
+    }
+
+    function addEvaluation(event) {
+      event.preventDefault();
+      const newEvaluation = document.getElementById('newEvaluation').value;
+      const newId = evaluations.length ? evaluations[evaluations.length - 1].id + 1 : 1;
+      evaluations.push({ id: newId, property_name: newEvaluation });
+      evaluationContainer.innerHTML = '';
+      document.getElementById('addForm').reset();
+      renderEvaluations();
+    }
+
+    function editEvaluation(event, id) {
+      event.preventDefault();
+      const newValue = event.target.querySelector('input').value;
+      const evaluation = evaluations.find(evaluation => evaluation.id === id);
+      evaluation.property_name = newValue;
+      evaluationContainer.innerHTML = '';
+      renderEvaluations();
+    }
+
+    function deleteEvaluation(event, id) {
+      event.preventDefault();
+      evaluations = evaluations.filter(evaluation => evaluation.id !== id);
+      evaluationContainer.innerHTML = '';
+      renderEvaluations();
+    }
+
+    document.getElementById('addForm').addEventListener('submit', addEvaluation);
+
+    renderEvaluations();
+  </script>
+</body>
+</html>
