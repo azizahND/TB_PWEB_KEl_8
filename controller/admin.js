@@ -1,4 +1,5 @@
 const { jawabanEvaluasi, mahasiswa, DetailJawabanEvaluasi, pertanyaan, User, admin} = require('../models');
+const ExcelJS = require('exceljs');
 
 async function getDashboard(req, res, next) {
   try {
@@ -90,16 +91,18 @@ async function generateExcel(req, res) {
       evaluasiDetailJawaban.forEach(detail => {
           worksheet.addRow({
               id: detail.id,
-              idPertanyaan: detail.idPertanyaan,
+              idPertanyaan: detail.pertanyaan.id,
               pertanyaan: detail.pertanyaan.pertanyaan,
-              idJawabanEvaluasi: detail.idJawabanEvaluasi,
-              idMahasiswa: detail.jawabanEvaluasi.idMahasiswa,
+              idJawabanEvaluasi: detail.jawabanEvaluasi.id,
+              idMahasiswa: detail.jawabanEvaluasi.mahasiswa.id,
               namaMahasiswa: detail.jawabanEvaluasi.mahasiswa.nama,
               nimMahasiswa: detail.jawabanEvaluasi.mahasiswa.nim,
               jawaban: detail.jawaban,
               tanggal: new Date(detail.createdAt)
           });
       });
+      
+
 
       // Menuliskan workbook ke buffer
       const buffer = await workbook.xlsx.writeBuffer();
