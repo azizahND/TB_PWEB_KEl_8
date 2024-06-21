@@ -54,7 +54,28 @@
         </table>
     </div>
 
+    <div id="notification-container" class="notification-container"></div>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        const socket = io("http://localhost:9000"); // Sesuaikan dengan URL dan port server Anda
     
+        // Mendengarkan event 'connect' dari server
+        socket.on('connect', () => {
+          console.log('Terhubung ke server Socket.IO');
+          const userId = "<%= mahasiswaa.id %>"; // Sesuaikan dengan cara Anda mendapatkan ID mahasiswa
+          socket.emit('join', userId); // Bergabung ke ruangan (room) sesuai dengan ID mahasiswa
+        });
+    
+        // Mendengarkan event 'setuju' untuk menampilkan notifikasi
+        socket.on('setuju', (data) => {
+          console.log('Notifikasi baru:', data);
+          // Tambahkan logika untuk menampilkan notifikasi kepada pengguna
+          // Contoh sederhana menggunakan alert
+          alert(data.message);
+        });
+      </script>
     
 </body>
 

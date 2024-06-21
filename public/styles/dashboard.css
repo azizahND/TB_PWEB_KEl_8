@@ -57,7 +57,7 @@ body {
 }
 
 #evaluationChart{
-    width: 40px;
+    width: 35px;
 }
 
 .col {
@@ -69,17 +69,30 @@ body {
     
 }
 
+ .delete-button {
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #d81d16;
+    border: none;
+    border-radius: 5px;
+    margin-top: 3px;
+ }
 
 
-
-.btn-primary {
-    margin-left: 1150px;
-    margin-top: 10px;
-    background-color: #1A4D2E;
-    border-radius: 10px;
-    color: #F1F3FC;
-    padding-top: 2px;
-    padding-bottom: 2px;
+.btn.btn-lihat {
+    text-align: center;
+    margin-left: 5px;
+    margin-top: 3px;
+    background-color: #efb909;
+    border-radius: 5px;
+    color: #FFFF;
+   
 }
 
 .btn-primary img {
@@ -126,7 +139,7 @@ th {
 }
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;

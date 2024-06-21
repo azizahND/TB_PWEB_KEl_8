@@ -23,6 +23,10 @@ router.get('/dash',  function(req, res, next) {
   res.render('dashboard1'); 
 });
 
+router.get('/feedback',  function(req, res, next) {
+  res.render('feedback'); 
+});
+
 
 
 router.get('/profileAdmin',  function(req, res, next) {
