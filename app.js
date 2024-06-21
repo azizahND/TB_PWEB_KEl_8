@@ -81,7 +81,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-// Menambahkan console log untuk menampilkan server berjalan di port tertentu
+
 var port = process.env.PORT || 9000; // Port default 3000 atau sesuai dengan yang diatur di file .env
 
 
