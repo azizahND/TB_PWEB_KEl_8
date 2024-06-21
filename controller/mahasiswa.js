@@ -41,7 +41,7 @@ async function getMahasiswaEvaluasi(req, res) {
             ]
         });
 
-        res.render('dashboard-m', { evaluasiJawaban });
+        res.render('dashboard-m', { evaluasiJawaban, mahasiswaa });
     } catch (error) {
         console.error('Error fetching evaluation results:', error);
         res.status(500).json({ error: 'Failed to fetch evaluation results' });

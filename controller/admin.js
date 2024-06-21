@@ -3,6 +3,8 @@ const ExcelJS = require('exceljs');
 
 async function getDashboard(req, res, next) {
   try {
+
+    
     const dataEvaluasi = await jawabanEvaluasi.findAll({
       include: [
         {
@@ -69,6 +71,8 @@ async function generateExcel(req, res) {
               }
           ]
       });
+        
+      
 
       // Membuat workbook dan worksheet
       const workbook = new ExcelJS.Workbook();
@@ -167,9 +171,19 @@ async function getEvaluasiResults(req, res) {
 
 async function getEvaluasiData(req, res) {
   try {
+    // Tentukan ID pertanyaan yang ingin ditampilkan
+    const questionIds = [1, 2, 3]; // Sesuaikan dengan ID pertanyaan yang diinginkan
+
     const evaluasiJawaban = await DetailJawabanEvaluasi.findAll({
       include: [
-        { model: pertanyaan, as: 'pertanyaan', attributes: ['pertanyaan'] }
+        { 
+          model: pertanyaan,
+          as: 'pertanyaan',
+          attributes: ['id', 'pertanyaan'],
+          where: {
+            id: questionIds  // Filter berdasarkan ID pertanyaan yang ditentukan
+          }
+        }
       ]
     });
 
@@ -187,6 +201,16 @@ async function getEvaluasiData(req, res) {
       }
 
       data[question][answer]++;
+    });
+
+    // Pastikan data mengandung semua nilai jawaban yang mungkin
+    const allAnswers = [1, 2, 3, 4, 5]; // Sesuaikan dengan nilai jawaban yang mungkin
+    Object.keys(data).forEach(question => {
+      allAnswers.forEach(answer => {
+        if (!data[question][answer]) {
+          data[question][answer] = 0;
+        }
+      });
     });
 
     res.json(data);
@@ -218,6 +242,7 @@ async function deleteJawabanEvaluasi(req, res) {
   res.status(500).json({ error: 'Failed to delete evaluation result' });
   }
   }
+
 
   async function showAdminProfile(req, res) {
     const emailAdmin = req.session.user.email; // Get the email of the logged-in admin
