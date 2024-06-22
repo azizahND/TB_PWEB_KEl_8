@@ -2,27 +2,27 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Feedback extends Model {
+  class feedback extends Model {
     static associate(models) {
-      Feedback.belongsTo(models.jawabanEvaluasi, {
-        foreignKey: 'idJawaban',
-        as: 'jawabanEvaluasi',
+      feedback.belongsTo(models.DetailJawabanEvaluasi, {
+        foreignKey: 'idDetailJawaban',
+        as: 'detailJawabanEvaluasi',
       });
-      Feedback.belongsTo(models.admin, {
+      feedback.belongsTo(models.admin, {
         foreignKey: 'idAdmin',
         as: 'admin',
       });
     }
   }
 
-  Feedback.init({
+  feedback.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    idJawaban: {
+    idDetailJawaban: {
       type: DataTypes.INTEGER
     },
     idAdmin: {
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'Feedback',
+    modelName: 'feedback',
   });
 
-  return Feedback;
+  return feedback;
 };
