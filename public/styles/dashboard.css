@@ -39,7 +39,11 @@ body {
 
 .nav a.active {
     font-weight: bold;
+   
+    
 }
+
+
 
 .nav li img {
     width: 90px;
@@ -57,7 +61,8 @@ body {
 }
 
 #evaluationChart{
-    width: 35px;
+    width: 20px;
+    height: 30px;
 }
 
 .col {
@@ -84,6 +89,9 @@ body {
     margin-top: 3px;
  }
 
+ .delete-button:hover {
+    background-color: #b06360;
+ }
 
 .btn.btn-lihat {
     text-align: center;
@@ -91,7 +99,7 @@ body {
     margin-top: 3px;
     background-color: #efb909;
     border-radius: 5px;
-    color: #FFFF;
+    color: #000000;
    
 }
 
@@ -117,6 +125,7 @@ body {
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 h1 {
     font-size: 24px;

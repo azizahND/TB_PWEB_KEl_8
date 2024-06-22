@@ -15,6 +15,7 @@ router.get('/hasilEvaluasi/:id', isAuthenticated, isAdmin, adminController.getEv
 
 router.get('/profil', isAuthenticated, isAdmin, adminController.showAdminProfile);
 
+router.get('/dashboard/excel', isAuthenticated, isAdmin, adminController.generateExcel);
 
 router.delete('/dashboard/:id', isAuthenticated, isAdmin, adminController.deleteJawabanEvaluasi);
 

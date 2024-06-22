@@ -53,75 +53,74 @@ function logout(req, res) {
   });
 }
 
-async function generateExcel(req, res) {
+async function generateExcel(req, res) {  
   try {
-      // Mengambil data evaluasi dari database dengan relasi ke tabel mahasiswa, jawabanEvaluasi, dan pertanyaan
-      const evaluasiDetailJawaban = await DetailJawabanEvaluasi.findAll({
-          include: [
-              {
-                  model: jawabanEvaluasi,
-                  include: {
-                      model: mahasiswa,
-                      attributes: ['nama', 'nim']
-                  }
-              },
-              {
-                  model: pertanyaan,
-                  attributes: ['pertanyaan']
+  // Mengambil data evaluasi dari database dengan relasi ke tabel mahasiswa, jawabanEvaluasi, dan pertanyaan
+  const evaluasiDetailJawaban = await DetailJawabanEvaluasi.findAll({
+      include: [
+          {
+              model: jawabanEvaluasi,
+              as: 'jawabanEvaluasi',
+              include: {
+                  model: mahasiswa,
+                  as: 'mahasiswa',
+                  attributes: ['nama', 'nim']
               }
-          ]
+          },
+          {
+              model: pertanyaan,
+              as: 'pertanyaan',
+              attributes: ['pertanyaan']
+          }
+      ]
+  });
+
+  // Membuat workbook dan worksheet
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Detail Evaluasi Jawaban');
+
+  // Menambahkan header ke worksheet
+  worksheet.columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'ID Pertanyaan', key: 'idPertanyaan', width: 15 },
+      { header: 'Pertanyaan', key: 'pertanyaan', width: 50 },
+      { header: 'ID Jawaban Evaluasi', key: 'idJawabanEvaluasi', width: 20 },
+      { header: 'ID Mahasiswa', key: 'idMahasiswa', width: 15 },
+      { header: 'Nama Mahasiswa', key: 'namaMahasiswa', width: 30 },
+      { header: 'NIM', key: 'nimMahasiswa', width: 15 },
+      { header: 'Jawaban', key: 'jawaban', width: 50 },
+      { header: 'Tanggal', key: 'tanggal', width: 15, style: { numFmt: 'dd/mm/yyyy' } }
+  ];
+
+  // Menambahkan data ke worksheet
+  evaluasiDetailJawaban.forEach(detail => {
+      worksheet.addRow({
+          id: detail.id,
+          idPertanyaan: detail.pertanyaan.id,
+          pertanyaan: detail.pertanyaan.pertanyaan,
+          idJawabanEvaluasi: detail.jawabanEvaluasi.id,
+          idMahasiswa: detail.jawabanEvaluasi.mahasiswa.id,
+          namaMahasiswa: detail.jawabanEvaluasi.mahasiswa.nama,
+          nimMahasiswa: detail.jawabanEvaluasi.mahasiswa.nim,
+          jawaban: detail.jawaban,
+          tanggal: new Date(detail.createdAt)
       });
-        
-      
+  });
 
-      // Membuat workbook dan worksheet
-      const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Detail Evaluasi Jawaban');
+  // Menuliskan workbook ke buffer
+  const buffer = await workbook.xlsx.writeBuffer();
 
-      // Menambahkan header ke worksheet
-      worksheet.columns = [
-          { header: 'ID', key: 'id', width: 10 },
-          { header: 'ID Pertanyaan', key: 'idPertanyaan', width: 15 },
-          { header: 'Pertanyaan', key: 'pertanyaan', width: 50 },
-          { header: 'ID Jawaban Evaluasi', key: 'idJawabanEvaluasi', width: 20 },
-          { header: 'ID Mahasiswa', key: 'idMahasiswa', width: 15 },
-          { header: 'Nama Mahasiswa', key: 'namaMahasiswa', width: 30 },
-          { header: 'NIM', key: 'nimMahasiswa', width: 15 },
-          { header: 'Jawaban', key: 'jawaban', width: 50 },
-          { header: 'Tanggal', key: 'tanggal', width: 15, style: { numFmt: 'dd/mm/yyyy' } }
-      ];
+  // Mengirimkan buffer sebagai file Excel
+  res.set({
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': 'attachment; filename=detail-evaluasi-jawaban.xlsx'
+  });
 
-      // Menambahkan data ke worksheet
-      evaluasiDetailJawaban.forEach(detail => {
-          worksheet.addRow({
-              id: detail.id,
-              idPertanyaan: detail.pertanyaan.id,
-              pertanyaan: detail.pertanyaan.pertanyaan,
-              idJawabanEvaluasi: detail.jawabanEvaluasi.id,
-              idMahasiswa: detail.jawabanEvaluasi.mahasiswa.id,
-              namaMahasiswa: detail.jawabanEvaluasi.mahasiswa.nama,
-              nimMahasiswa: detail.jawabanEvaluasi.mahasiswa.nim,
-              jawaban: detail.jawaban,
-              tanggal: new Date(detail.createdAt)
-          });
-      });
-      
-
-
-      // Menuliskan workbook ke buffer
-      const buffer = await workbook.xlsx.writeBuffer();
-
-      // Mengirimkan buffer sebagai file Excel
-      res.set({
-          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'Content-Disposition': 'attachment; filename=detail-evaluasi-jawaban.xlsx'
-      });
-
-      res.send(buffer);
-  } catch (error) {
-      console.error('Error generating Excel:', error);
-      res.status(500).json({ error: 'Failed to generate Excel file' });
-  }
+  res.send(buffer);
+} catch (error) {
+  console.error('Error generating Excel:', error);
+  res.status(500).json({ error: 'Failed to generate Excel file' });
+}
 }
 
 
