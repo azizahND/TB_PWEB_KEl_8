@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idJawaban: {
+      idDetailJawaban: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'jawabanEvaluasis', // Nama tabel yang dirujuk
+          model: 'detailJawabanEvaluasis', // Nama tabel yang dirujuk
           key: 'id' // Kolom pada tabel yang dirujuk
         },
         onUpdate: 'CASCADE',
