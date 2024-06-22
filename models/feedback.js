@@ -23,10 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     idDetailJawaban: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'detailJawabanEvaluasis',
+        key: 'id'
+      }
     },
     idAdmin: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'admins',
+        key: 'id'
+      }
     },
     feedback: {
       type: DataTypes.STRING
