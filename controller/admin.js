@@ -337,6 +337,49 @@ const postFeedback = async (req, res) => {
     return res.status(500).json({ success: false, message: 'Kesalahan Server' })
   }
 }
+
+
+const getAllFeedbacks = async (req, res) => {
+  try {
+    const feedbacks = await feedback.findAll({
+        include: [
+            {
+                model: DetailJawabanEvaluasi,
+                as: 'detailJawabanEvaluasi',
+                include: [
+                    {
+                        model: jawabanEvaluasi,
+                        as: 'jawabanEvaluasi',
+                        include: [
+                            {
+                                model: mahasiswa,
+                                as: 'mahasiswa',
+                                include: [
+                                    {
+                                        model: User,
+                                        as: 'user'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        model: pertanyaan,
+                        as: 'pertanyaan'
+                    }
+                ]
+            }
+        ]
+    });
+
+    res.render('adminFeedback', { feedbacks });
+} catch (error) {
+    console.error('Error fetching feedbacks:', error);
+    res.status(500).send('Internal Server Error');
+}
+};
+
+
 module.exports = {
   getDashboard,
   renderDashboard,
@@ -346,5 +389,6 @@ module.exports = {
   getEvaluasiResults,
   deleteJawabanEvaluasi,
   showAdminProfile,
-  postFeedback
+  postFeedback,
+  getAllFeedbacks
 };

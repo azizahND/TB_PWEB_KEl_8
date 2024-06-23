@@ -28,6 +28,8 @@ const login = async(req, res) => {
             role: user.role
         };
 
+        
+
         console.log('Login successful:', req.session.user);
 
         // Membuat percabangan untuk mengarahkan berdasarkan role
