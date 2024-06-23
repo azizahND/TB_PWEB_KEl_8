@@ -20,6 +20,9 @@ router.get('/dashboard/excel', isAuthenticated, isAdmin, adminController.generat
 
 router.delete('/dashboard/:id', isAuthenticated, isAdmin, adminController.deleteJawabanEvaluasi);
 
+router.get('/feedback', isAuthenticated, isAdmin, adminController. getAllFeedbacks);
+
+
 
 router.get('/dash',  function(req, res, next) {
   res.render('dashboard1'); 
