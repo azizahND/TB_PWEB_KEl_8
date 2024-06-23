@@ -1,38 +1,78 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hasil Evaluasi</title>
     <link href="/styles/hasil.css" rel="stylesheet" />
 </head>
+
 <body>
+
+
     <div class="hasil">
-        <h1><strong>Hasil Evaluasi</strong></h1>
+
         <div class="evaluasi">
-            <div class="container text-left">
-                <% if (evaluasiJawaban && evaluasiJawaban.length > 0) { %>
-                    <h2 style="font-size: 20px; margin-bottom: 50px;">Mahasiswa: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nama %> (NIM: <%= evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nim %>)</h2>
-                    <% evaluasiJawaban.forEach(function(evaluasi) { %>
-                        <div class="mb-3" style="margin-top: 20px;">
-                            <label for="pertanyaan" class="form-label"><%= evaluasi.pertanyaan.pertanyaan %></label>
-                            <div id="pertanyaan"><%= evaluasi.jawaban %></div>
+            <form action="/admin/formFeedback" method="post" enctype="multipart/form-data">
+                <div class="container text-left">
+                    <h1 style="color: #1A4D2E ;"><strong>Hasil Evaluasi</strong></h1>
+                    <% if (evaluasiJawaban && evaluasiJawaban.length> 0) { %>
+                        <h2 style="font-size: 20px; margin-bottom: 50px;">Mahasiswa: <%=
+                                evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nama %> (NIM: <%=
+                                    evaluasiJawaban[0].jawabanEvaluasi.mahasiswa.nim %>)</h2>
+                        <% evaluasiJawaban.forEach(function(evaluasi,i) { %>
+                            <div class="mb-3" style="margin-top: 20px;">
+                                <label for="pertanyaan" class="form-label">
+                                    <%= evaluasi.pertanyaan.pertanyaan %>
+                                </label>
+                                <div id="pertanyaan">
+                                    <%= evaluasi.jawaban %>
+                                </div>
 
-                        </div>
-                        
-                    <% }); %>
-                <% } 
-                
-                else { %>
-                    <div class="mb-3">
-                        <p>Tidak ada data evaluasi untuk mahasiswa ini.</p>
-                    </div>
-                <% } %>
+                            </div>
 
-                
-            </div>
-            <a href="/admin/dashboard" class="btn-primary" style="margin-top: 30px;">Kembali</a>
+                        <% if (evaluasi.idPertanyaan==4) { %>
+                            <input type="text" name="id_djwb" value="<%= evaluasiJawaban[i].id %>" id="pertanyaan" style="display: none;">
+                                <div class="mb-2" style="margin-top: 20px;">
+                                    <label for="pertanyaan" class="form-label">
+                                        Feedback </label><br />
+                                    <textarea name="feedback_text" id="pertanyaan" rows="4" ><%= evaluasiJawaban[i]?.feedback?.feedback %></textarea>
+                                
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="pertanyaan" class="form-label">
+                                        Dokumentasi </label><br />
+                                    <input type="file" name="file" id="pertanyaan">
+                                
+                                </div>
+                                <% if (evaluasiJawaban[i]?.feedback?.picture) { %>
+                                <img src="/images/<%= evaluasiJawaban[i]?.feedback?.picture %>">
+                                <% } %>
+                            <%} %>
+
+                            <% }); %>
+                                <% } else { %>
+                                    <div class="mb-3">
+                                        <p>Tidak ada data evaluasi untuk mahasiswa ini.</p>
+                                    </div>
+                                    <% } %>
+
+                                    
+
+
+
+                                        <button type="button" class="btn-primary"
+                                            onclick="window.location.href='/admin/dashboard'">Kembali</button>
+                                        <button class="btn-primary1" type="submit">Simpan</button>
+                </div>
+
+
+            </form>
         </div>
     </div>
+
 </body>
+
 </html>

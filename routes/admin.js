@@ -3,6 +3,7 @@ var router = express.Router();
 const adminController = require('../controller/admin');
 const { isAuthenticated, isAdmin } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
 const { jawabanEvaluasi } = require('../models');
+const mahasiswaController = require('../controller/mahasiswa');
 
 // Rute untuk dashboard admin
 
@@ -15,12 +16,17 @@ router.get('/hasilEvaluasi/:id', isAuthenticated, isAdmin, adminController.getEv
 
 router.get('/profil', isAuthenticated, isAdmin, adminController.showAdminProfile);
 
+router.get('/dashboard/excel', isAuthenticated, isAdmin, adminController.generateExcel);
 
 router.delete('/dashboard/:id', isAuthenticated, isAdmin, adminController.deleteJawabanEvaluasi);
 
 
 router.get('/dash',  function(req, res, next) {
   res.render('dashboard1'); 
+});
+
+router.get('/feedback',  function(req, res, next) {
+  res.render('feedback'); 
 });
 
 
@@ -66,6 +72,9 @@ router.delete('/dashboard/:id', async (req, res) => {
     res.status(500).send({ message: 'Terjadi kesalahan', error });
   }
 });
+
+
+router.post('/formFeedback', mahasiswaController.uploadd, adminController.postFeedback);
 
 
 

@@ -21,7 +21,7 @@
     </div>
 
     <div class="container">
-        <h1>Data Evaluasi</h1>
+        <h1>Data Feedback</h1>
         <table id="kriteriaTable">
             <thead>
                 <tr>
@@ -30,27 +30,48 @@
                     <th style="text-align: center;">Evaluasi</th>
                 </tr>
             </thead>
-            <tbody>
-                <% if (evaluasiJawaban && evaluasiJawaban.length > 0) { %>
-                    <% evaluasiJawaban.forEach((jawaban, index) => { %>
+    <tbody>
+        <% if (evaluasiJawaban && evaluasiJawaban.length> 0) { %>
+            <% evaluasiJawaban.forEach((jawaban, index)=> { %>
+                <tr>
+                    <td>
+                        <%= index + 1 %>
+                    </td>
+                    <td>
+                        <%= jawaban?.detailJawabanEvaluasi[0]?.createdAt.toLocaleDateString() %>
+                    </td>
+                    <td>
+                        <ul>
+                            <% jawaban.detailJawabanEvaluasi.forEach((detail)=> { %>
+                                <li>
+                                    <%= detail.pertanyaan.pertanyaan %>: <%= detail.jawaban %>
+                                            <% if (detail.picture) { %>
+                                                <br />Bukti: <br/><img width="10%" src="/images/<%= detail.picture %>" />
+                                                <% } %>
+                                                    <% if (detail.feedback) { %>
+                                                        <br />Feedback: <%= detail.feedback.feedback %><br/>
+                                                            <% if (detail.feedback.picture) { %>
+                                                            Dokumentasi:<br/>
+                                                            <img width="80%" src="/images/<%= detail.feedback.picture %>" />
+                                                                <% } %>
+                                                            <% } %>
+                                </li>
+                                <% if (detail.pertanyaan.id==4) { %>
+                                    <br />
+                                    <% } %>
+                                        <% }) %>
+                        </ul>
+                    </td>
+                </tr>
+                <% }); %>
+                    <% } else { %>
                         <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= jawaban.createdAt.toLocaleDateString() %></td>
-                            <td>
-                                <ul>
-                                    <% jawaban.detailJawabanEvaluasi.forEach((detail) => { %>
-                                        <li><%= detail.pertanyaan.pertanyaan %>: <%= detail.jawaban %></li>
-                                    <% }) %>
-                                </ul>
-                            </td>
+                            <td colspan="3">Tidak ada data feedback.</td>
                         </tr>
-                    <% }); %>
-                <% } else { %>
-                    <tr>
-                        <td colspan="3">Tidak ada data evaluasi.</td>
-                    </tr>
-                <% } %>
-            </tbody>
+                        <% } %>
+    </tbody>
+
+
         </table>
     </div>
 
@@ -75,8 +96,8 @@
           // Contoh sederhana menggunakan alert
           alert(data.message);
         });
-      </script> -->
-    
+      </script>
+     -->
 </body>
 
 </html>

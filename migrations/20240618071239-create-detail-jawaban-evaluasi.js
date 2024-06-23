@@ -9,15 +9,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      
+
       idPertanyaan: {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'pertanyaans', // Nama tabel yang dirujuk
-            key: 'id' // Kolom pada tabel yang dirujuk
-          }
-        },
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'pertanyaans', // Nama tabel yang dirujuk
+          key: 'id' // Kolom pada tabel yang dirujuk
+        }
+      },
       jawaban: {
+        type: Sequelize.STRING
+      },
+      picture: {
         type: Sequelize.STRING
       },
       idJawabanEvaluasi: {
@@ -29,11 +32,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     });
   },

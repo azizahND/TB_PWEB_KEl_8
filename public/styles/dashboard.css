@@ -39,7 +39,11 @@ body {
 
 .nav a.active {
     font-weight: bold;
+   
+    
 }
+
+
 
 .nav li img {
     width: 90px;
@@ -57,7 +61,8 @@ body {
 }
 
 #evaluationChart{
-    width: 40px;
+    width: 20px;
+    height: 30px;
 }
 
 .col {
@@ -69,17 +74,33 @@ body {
     
 }
 
+ .delete-button {
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #d81d16;
+    border: none;
+    border-radius: 5px;
+    margin-top: 3px;
+ }
 
+ .delete-button:hover {
+    background-color: #b06360;
+ }
 
-
-.btn-primary {
-    margin-left: 1150px;
-    margin-top: 10px;
-    background-color: #1A4D2E;
-    border-radius: 10px;
-    color: #F1F3FC;
-    padding-top: 2px;
-    padding-bottom: 2px;
+.btn.btn-lihat {
+    text-align: center;
+    margin-left: 5px;
+    margin-top: 3px;
+    background-color: #efb909;
+    border-radius: 5px;
+    color: #000000;
+   
 }
 
 .btn-primary img {
@@ -104,6 +125,7 @@ body {
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 h1 {
     font-size: 24px;
@@ -126,7 +148,7 @@ th {
 }
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
