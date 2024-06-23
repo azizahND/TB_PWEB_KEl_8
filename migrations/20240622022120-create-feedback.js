@@ -12,8 +12,8 @@ module.exports = {
       idDetailJawaban: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'detailJawabanEvaluasis', // Nama tabel yang dirujuk
-          key: 'id' // Kolom pada tabel yang dirujuk
+          model: 'detailJawabanEvaluasis', 
+          key: 'id' 
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
@@ -21,8 +21,8 @@ module.exports = {
       idAdmin: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'admins', // Nama tabel yang dirujuk
-          key: 'id' // Kolom pada tabel yang dirujuk
+          model: 'admins', 
+          key: 'id' 
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'

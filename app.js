@@ -41,11 +41,7 @@ app.set('io', io);
 io.on('connection', (socket) => {
   console.log('a user connected');
   
-  // Bergabung ke ruangan berdasarkan ID mahasiswa
-  // socket.on('joinRoom', (emailMahasiswa) => {
-  //   console.log(`Mahasiswa dengan email ${emailMahasiswa} bergabung ke ruangan`);
-  //   socket.join(emailMahasiswa);
-  // });
+  
 
   socket.on("join", (userId) => {
     console.log(`User with userId  joined room`);
@@ -58,14 +54,14 @@ io.on('connection', (socket) => {
 });
 
 
-// Middleware untuk socket.io
+
 
 app.use(session({
   secret: 'secret_key',
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 2 * 60 * 60 * 1000, // Waktu dalam milidetik (2 jam)
+    maxAge: 2 * 60 * 60 * 1000, 
   }
 }));
 
@@ -73,7 +69,7 @@ app.use(session({
 
 
 
-// Setup middleware
+
 app.use(session({
   secret: 'secret_key',
   resave: false,  
@@ -89,20 +85,8 @@ app.use('/mahasiswa', mhsRouter);
 app.use('/admin', adminRouter);
 
 
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
 
-// app.use(function(err, req, res, next) {
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
-
-
-// Menambahkan console log untuk menampilkan server berjalan di port tertentu
-var port = process.env.PORT || 9000; // Port default 3000 atau sesuai dengan yang diatur di file .env
+var port = process.env.PORT || 9000; 
 
 
 module.exports = app;

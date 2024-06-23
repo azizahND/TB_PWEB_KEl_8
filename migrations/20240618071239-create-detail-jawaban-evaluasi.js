@@ -13,8 +13,8 @@ module.exports = {
       idPertanyaan: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'pertanyaans', // Nama tabel yang dirujuk
-          key: 'id' // Kolom pada tabel yang dirujuk
+          model: 'pertanyaans', 
+          key: 'id' 
         }
       },
       jawaban: {
@@ -26,8 +26,8 @@ module.exports = {
       idJawabanEvaluasi: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'jawabanevaluasis', // Nama tabel yang dirujuk
-          key: 'id' // Kolom pada tabel yang dirujuk
+          model: 'jawabanevaluasis', 
+          key: 'id' 
         }
       },
       createdAt: {

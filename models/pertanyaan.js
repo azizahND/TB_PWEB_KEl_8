@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'idAdmin',
         as: 'admin',
       });
-      pertanyaan.hasMany(models.DetailJawabanEvaluasi, { // Perbaiki penulisan nama model di sini
+      pertanyaan.hasMany(models.DetailJawabanEvaluasi, { 
         foreignKey: 'idPertanyaan',
         as: 'detailJawabanEvaluasi',
       });

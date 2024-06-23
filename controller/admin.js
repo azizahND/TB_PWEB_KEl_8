@@ -49,14 +49,14 @@ function logout(req, res) {
       console.error('Error ketika logout:', err);
       return res.status(500).json({ message: 'Internal server error' });
     }
-    // Redirect to the login page
+    
     return res.redirect('/login');
   });
 }
 
 async function generateExcel(req, res) {
   try {
-    // Mengambil data evaluasi dari database dengan relasi ke tabel mahasiswa, jawabanEvaluasi, dan pertanyaan
+    
     const evaluasiDetailJawaban = await DetailJawabanEvaluasi.findAll({
       include: [
         {
@@ -76,11 +76,11 @@ async function generateExcel(req, res) {
       ]
     });
 
-    // Membuat workbook dan worksheet
+    
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Detail Evaluasi Jawaban');
 
-    // Menambahkan header ke worksheet
+    
     worksheet.columns = [
       { header: 'ID', key: 'id', width: 10 },
       { header: 'ID Pertanyaan', key: 'idPertanyaan', width: 15 },
@@ -93,7 +93,7 @@ async function generateExcel(req, res) {
       { header: 'Tanggal', key: 'tanggal', width: 15, style: { numFmt: 'dd/mm/yyyy' } }
     ];
 
-    // Menambahkan data ke worksheet
+    
     evaluasiDetailJawaban.forEach(detail => {
       worksheet.addRow({
         id: detail.id,
@@ -108,10 +108,10 @@ async function generateExcel(req, res) {
       });
     });
 
-    // Menuliskan workbook ke buffer
+    
     const buffer = await workbook.xlsx.writeBuffer();
 
-    // Mengirimkan buffer sebagai file Excel
+    
     res.set({
       'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': 'attachment; filename=detail-evaluasi-jawaban.xlsx'
@@ -128,10 +128,9 @@ async function generateExcel(req, res) {
 
 
 async function getEvaluasiResults(req, res) {
-  const idJawabanEvaluasi = req.params.id; // Dapatkan ID jawaban evaluasi dari parameter URL
-
+  const idJawabanEvaluasi = req.params.id; 
   try {
-    // Dapatkan data detail jawaban evaluasi berdasarkan idJawabanEvaluasi
+    
     const evaluasiJawaban = await DetailJawabanEvaluasi.findAll({
       where: { idJawabanEvaluasi: idJawabanEvaluasi },
       include: [
@@ -164,9 +163,9 @@ async function getEvaluasiResults(req, res) {
       return res.status(404).json({ error: 'Data evaluasi tidak ditemukan' });
     }
 
-    // Render halaman EJS dengan data yang diambil
+    
     res.render('hasilEvaluasi', { evaluasiJawaban });
-    //res.status(200).json({ error: 'Failed to fetch evaluation results', data: { evaluasiJawaban} });
+    
   } catch (error) {
     console.error('Error fetching evaluation results:', error);
     res.status(500).json({ error: 'Failed to fetch evaluation results' });
@@ -177,8 +176,8 @@ async function getEvaluasiResults(req, res) {
 
 async function getEvaluasiData(req, res) {
   try {
-    // Tentukan ID pertanyaan yang ingin ditampilkan
-    const questionIds = [1, 2, 3]; // Sesuaikan dengan ID pertanyaan yang diinginkan
+   
+    const questionIds = [1, 2, 3]; 
 
     const evaluasiJawaban = await DetailJawabanEvaluasi.findAll({
       include: [
@@ -187,7 +186,7 @@ async function getEvaluasiData(req, res) {
           as: 'pertanyaan',
           attributes: ['id', 'pertanyaan'],
           where: {
-            id: questionIds  // Filter berdasarkan ID pertanyaan yang ditentukan
+            id: questionIds  
           }
         }
       ]
@@ -209,8 +208,8 @@ async function getEvaluasiData(req, res) {
       data[question][answer]++;
     });
 
-    // Pastikan data mengandung semua nilai jawaban yang mungkin
-    const allAnswers = [1, 2, 3, 4, 5]; // Sesuaikan dengan nilai jawaban yang mungkin
+    
+    const allAnswers = [1, 2, 3, 4, 5]; 
     Object.keys(data).forEach(question => {
       allAnswers.forEach(answer => {
         if (!data[question][answer]) {
@@ -228,16 +227,15 @@ async function getEvaluasiData(req, res) {
 
 
 async function deleteJawabanEvaluasi(req, res) {
-  const id = req.params.id; // Dapatkan ID dari parameter URL
-
+  const id = req.params.id; 
   try {
-    // Hapus detail jawaban evaluasi yang terkait
+    
     await DetailJawabanEvaluasi.destroy({
       where: { idJawabanEvaluasi: id }
     });
 
 
-    // Hapus jawaban evaluasi
+   
     await jawabanEvaluasi.destroy({
       where: { id: id }
     });
@@ -251,10 +249,10 @@ async function deleteJawabanEvaluasi(req, res) {
 
 
 async function showAdminProfile(req, res) {
-  const emailAdmin = req.session.user.email; // Get the email of the logged-in admin
+  const emailAdmin = req.session.user.email; 
 
   try {
-    // Find the user based on the email
+    
     const userData = await User.findOne({
       where: { email: emailAdmin },
       attributes: ['id', 'email', 'username']
@@ -264,7 +262,7 @@ async function showAdminProfile(req, res) {
       return res.status(404).json({ error: 'User tidak ditemukan' });
     }
 
-    // Find admin based on the user's id
+    
     const adminData = await admin.findOne({
       where: { idUser: userData.id },
       include: {
@@ -311,7 +309,7 @@ const postFeedback = async (req, res) => {
       idAdmin: userData.id,
     };
 
-    // Jika file diunggah, tambahkan properti file ke dalam objek pembaruan
+    
     if (file_uploaded) {
       createData.picture = file_uploaded.originalname;
     }

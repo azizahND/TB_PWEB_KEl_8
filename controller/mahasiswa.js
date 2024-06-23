@@ -58,7 +58,7 @@ const postEvaluasi = async (req, res) => {
                     picture: null,
                 };
 
-                // Jika file diunggah, tambahkan properti file ke dalam objek pembaruan
+                
                 if (file_uploaded && i === (questions.length - 1)) {
                     createData.picture = file_uploaded.originalname;
                 }
@@ -77,10 +77,10 @@ const postEvaluasi = async (req, res) => {
 }
 
 async function getMahasiswaEvaluasi(req, res) {
-    const emailMahasiswa = req.session.user.email; // Dapatkan email mahasiswa dari sesi
+    const emailMahasiswa = req.session.user.email; 
 
     try {
-        // Cari ID mahasiswa berdasarkan email dari tabel User
+        
         const mahasiswaa = await mahasiswa.findOne({
             include: [
                 {
@@ -98,7 +98,7 @@ async function getMahasiswaEvaluasi(req, res) {
 
         const idMahasiswa = mahasiswaa.id;
 
-        // Mengambil data jawaban evaluasi beserta detailnya
+        
         const evaluasiJawaban = await jawabanEvaluasi.findAll({
             where: { idMahasiswa: idMahasiswa },
             include: [
@@ -125,10 +125,10 @@ async function getMahasiswaEvaluasi(req, res) {
 
 
 async function showProfile(req, res) {
-    const emailMahasiswa = req.session.user.email; // Get the email of the logged-in user
+    const emailMahasiswa = req.session.user.email; 
 
     try {
-        // Find the user based on the email
+        
         const userData = await User.findOne({
             where: { email: emailMahasiswa },
             attributes: ['id', 'email', 'username']
@@ -138,7 +138,7 @@ async function showProfile(req, res) {
             return res.status(404).json({ error: 'User tidak ditemukan' });
         }
 
-        // Find mahasiswa based on the user's id
+        
         const mahasiswaData = await mahasiswa.findOne({
             where: { idUser: userData.id },
             include: {
@@ -161,16 +161,16 @@ async function showProfile(req, res) {
 
 
 async function getFormEvaluasi(req, res) {
-    const idJawabanEvaluasi = req.params.id; // Dapatkan ID jawaban evaluasi dari parameter URL
+    const idJawabanEvaluasi = req.params.id; 
 
     try {
-        // Dapatkan data detail jawaban evaluasi berdasarkan idJawabanEvaluasi
+        
         const evaluasiJawaban = await pertanyaan.findAll({
 
         });
 
 
-        // Render halaman EJS dengan data yang diambil
+        
         res.render('formEvaluasi', { evaluasiJawaban });
     } catch (error) {
         console.error('Error fetching evaluation results:', error);
@@ -181,10 +181,10 @@ async function getFormEvaluasi(req, res) {
 
 
 async function getMahasiswaFeedback(req, res) {
-    const emailMahasiswa = req.session.user.email; // Dapatkan email mahasiswa dari sesi
+    const emailMahasiswa = req.session.user.email; 
 
     try {
-        // Cari ID mahasiswa berdasarkan email dari tabel User
+        
         const mahasiswaa = await mahasiswa.findOne({
             include: [
                 {
@@ -202,7 +202,7 @@ async function getMahasiswaFeedback(req, res) {
 
         const idMahasiswa = mahasiswaa.id;
 
-        // Mengambil data jawaban evaluasi beserta detailnya
+        
         const evaluasiJawaban = await jawabanEvaluasi.findAll({
             where: { idMahasiswa: idMahasiswa },
             include: [
@@ -229,7 +229,7 @@ async function getMahasiswaFeedback(req, res) {
         });
 
         res.render('dashboard-f', { evaluasiJawaban, mahasiswaa });
-        //res.status(200).json({ error: 'Failed to fetch evaluation results', data: { evaluasiJawaban } });
+  
     } catch (error) {
         console.error('Error fetching evaluation results:', error);
         res.status(500).json({ error: 'Failed to fetch evaluation results' });
@@ -244,5 +244,5 @@ module.exports = {
     postEvaluasi,
     uploadd,
     getMahasiswaFeedback,
-    // Export fungsi lain jika ada
+    
 };

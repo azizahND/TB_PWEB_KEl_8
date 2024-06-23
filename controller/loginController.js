@@ -32,7 +32,7 @@ const login = async(req, res) => {
 
         console.log('Login successful:', req.session.user);
 
-        // Membuat percabangan untuk mengarahkan berdasarkan role
+        
         if (user.role === 'mahasiswa') {
             return res.redirect('/mahasiswa/dashboard');
         } else {

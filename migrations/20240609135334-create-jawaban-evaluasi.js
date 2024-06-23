@@ -9,26 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      // idPertanyaan: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'pertanyaans', // Nama tabel yang dirujuk
-      //     key: 'id' // Kolom pada tabel yang dirujuk
-      //   }
-      // },
+      
       idMahasiswa: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'mahasiswas', // Nama tabel yang dirujuk
-          key: 'id' // Kolom pada tabel yang dirujuk
+          model: 'mahasiswas', 
+          key: 'id' 
         }
       },
-      // jawaban: {
-      //   type: Sequelize.STRING
-      // },
-      // tanggal: {
-      //   type: Sequelize.DATE
-      // },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

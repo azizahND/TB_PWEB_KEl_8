@@ -59,13 +59,13 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <!-- <script>
-        const socket = io("http://localhost:9000"); // Sesuaikan dengan URL dan port server Anda
+        const socket = io("http://localhost:9000"); 
     
         // Mendengarkan event 'connect' dari server
         socket.on('connect', () => {
           console.log('Terhubung ke server Socket.IO');
-          const userId = "<%= mahasiswaa.id %>"; // Sesuaikan dengan cara Anda mendapatkan ID mahasiswa
-          socket.emit('join', userId); // Bergabung ke ruangan (room) sesuai dengan ID mahasiswa
+          const userId = "<%= mahasiswaa.id %>"; 
+          socket.emit('join', userId); 
         });
     
         // Mendengarkan event 'setuju' untuk menampilkan notifikasi

@@ -24,23 +24,6 @@ router.get('/feedback', isAuthenticated, isAdmin, adminController. getAllFeedbac
 
 
 
-router.get('/dash',  function(req, res, next) {
-  res.render('dashboard1'); 
-});
-
-router.get('/feedback',  function(req, res, next) {
-  res.render('feedback'); 
-});
-
-
-
-router.get('/profileAdmin',  function(req, res, next) {
-  res.render('profile-d'); 
-});
-
-router.get('/admin', isAuthenticated, isAdmin, (req, res) => {
-  res.send('Welcome to the admin page.');
-});
 
 router.get('/login', (req, res) => {
   res.render('login');
@@ -49,11 +32,6 @@ router.get('/login', (req, res) => {
 router.get('/ubahPassword',  function(req, res, next) {
   res.render('gantiPassword'); 
 });
-
-router.get('/hasil', (req, res) => {
-  res.render('hasilEvaluasi');
-});
-
 
 
 router.delete('/dashboard/:id', async (req, res) => {
