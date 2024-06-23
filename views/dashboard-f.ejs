@@ -11,9 +11,9 @@
     <div class="nav">
         <ul class="menu">
             <li><a href="#"><img src="/images/unand.jpeg" alt="Logo"></a></li>
-            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="/mahasiswa/dashboard" >Dashboard</a></li>
             <li><a href="/mahasiswa/formEvaluasi">Evaluasi</a></li>
-            <li><a href="/mahasiswa/feedback">Umpan Balik</a></li>
+            <li><a href="/mahasiswa/feedback" class="active">Umpan Balik</a></li>
             <li><a href="#">Notifikasi</a></li>
             <li><a href="/mahasiswa/profil" >Profile</a></li>
             <li><a href="/login" style="margin-top: 70px;">Log Out</a></li>
@@ -46,7 +46,7 @@
                                 <li>
                                     <%= detail.pertanyaan.pertanyaan %>: <%= detail.jawaban %>
                                             <% if (detail.picture) { %>
-                                                <br />Bukti: <br/><img width="10%" src="/images/<%= detail.picture %>" />
+                                                <br />Bukti: <br/><img width="80%" src="/images/<%= detail.picture %>" />
                                                 <% } %>
                                                     <% if (detail.feedback) { %>
                                                         <br />Feedback: <%= detail.feedback.feedback %><br/>
