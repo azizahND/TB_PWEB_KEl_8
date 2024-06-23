@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'idJawabanEvaluasi',
         as: 'jawabanEvaluasi'
       });
-      DetailJawabanEvaluasi.hasMany(models.feedback, {
+      DetailJawabanEvaluasi.hasOne(models.feedback, {
         foreignKey: 'idDetailJawaban',
-        as: 'feedbacks'
+        as: 'feedback'
       });
     }
   }
@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     jawaban: {
       type: DataTypes.STRING
+    },
+    picture: {
+      type: DataTypes.STRING,
+      allowNull:true,
     },
     idJawabanEvaluasi: {
       type: DataTypes.INTEGER,

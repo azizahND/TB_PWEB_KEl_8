@@ -5,6 +5,7 @@ const { isAuthenticated, isMahasiswa } = require('../middlewares/auth'); // Sesu
 const mahasiswaController = require('../controller/mahasiswa');
 
 router.get('/dashboard', isAuthenticated, isMahasiswa, mahasiswaController.getMahasiswaEvaluasi);
+router.get('/feedback', isAuthenticated, isMahasiswa, mahasiswaController.getMahasiswaFeedback);
 router.get('/profil', isAuthenticated, isMahasiswa, mahasiswaController.showProfile);
 
 
@@ -36,6 +37,8 @@ router.get('/ubahPassword' ,  function(req, res, next) {
   res.render('ganti-password'); 
 });
 
+router.get('/formEvaluasi', isAuthenticated, mahasiswaController.getFormEvaluasi);
+router.post('/formEvaluasi', mahasiswaController.uploadd, mahasiswaController.postEvaluasi);
 
 module.exports=router;
 
