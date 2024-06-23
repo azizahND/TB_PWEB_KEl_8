@@ -42,6 +42,17 @@ body {
     font-size: 15px;
 }
 
+.btn-primary1 {
+    margin-top: 18px;
+    background-color: #1A4D2E;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
 .btn-primary:hover {
     background-color: #3e9743;
 }

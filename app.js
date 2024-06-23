@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -74,7 +74,6 @@ app.use(session({
 
 
 // Setup middleware
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: 'secret_key',
   resave: false,  

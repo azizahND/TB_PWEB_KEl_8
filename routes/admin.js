@@ -3,6 +3,7 @@ var router = express.Router();
 const adminController = require('../controller/admin');
 const { isAuthenticated, isAdmin } = require('../middlewares/auth'); // Sesuaikan path jika diperlukan
 const { jawabanEvaluasi } = require('../models');
+const mahasiswaController = require('../controller/mahasiswa');
 
 // Rute untuk dashboard admin
 
@@ -71,6 +72,9 @@ router.delete('/dashboard/:id', async (req, res) => {
     res.status(500).send({ message: 'Terjadi kesalahan', error });
   }
 });
+
+
+router.post('/formFeedback', mahasiswaController.uploadd, adminController.postFeedback);
 
 
 
